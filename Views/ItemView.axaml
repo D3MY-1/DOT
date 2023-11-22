@@ -1,0 +1,23 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DOT.Views.ItemView"
+             xmlns:vm="using:DOT.ViewModels"
+             x:DataType="vm:ItemViewModel"
+             Width="279"
+             Height="200"
+             >
+  <StackPanel Spacing="5" Width="260">
+      <Button Background ="Transparent"
+             Height="150" Width="260"
+              Command="{Binding Command}"
+              CornerRadius="15"
+              >
+        <Image Width="260" Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
+      </Button >
+    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="20"/>
+  </StackPanel>
+  
+</UserControl>

@@ -1,0 +1,16 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="DOT.App"
+             RequestedThemeVariant="Default"
+             xmlns:local="using:DOT">
+  <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="/Styles.axaml"/>
+
+  </Application.Styles>
+</Application>
