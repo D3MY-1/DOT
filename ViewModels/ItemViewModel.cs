@@ -31,7 +31,7 @@ namespace DOT.ViewModels
             Command = ReactiveCommand.Create(() =>
             {
                 numberClicked += 1;
-                //Content = numberClicked.ToString();
+                
             });
             
         }

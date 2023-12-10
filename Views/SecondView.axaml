@@ -5,13 +5,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DOT.Views.SecondView">
   <Grid ColumnDefinitions="4*,*">
-    <ItemsControl ItemsSource="{Binding Buttons}" Margin="10" Background="Transparent">
-      <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <WrapPanel/>
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    <ScrollViewer  Name="BetterScrollViewer" Grid.Column="0" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+      <ItemsControl ItemsSource="{Binding Buttons}" Margin="10" Background="Transparent">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </ScrollViewer>
     <TextBox Margin="0 10 20 10" Grid.Column="1" Background="Red">тут будут фильтры</TextBox>
   </Grid>
 </UserControl>

@@ -18,12 +18,13 @@ public class MainViewModel : ViewModelBase
     public FirstViewModel FirstView { get; }
     public SecondViewModel SecondView { get; }
 
+
+
     public MainViewModel()
     {
-        FirstView = new FirstViewModel();
-        SecondView = new SecondViewModel();
+        FirstView = new FirstViewModel(this);
+        SecondView = new SecondViewModel(this);
         _contentViewModel = SecondView;
     }
-
 
 }

@@ -13,7 +13,7 @@
     </Style.Resources>
   </Style>
 
-
+  <!-- Text Box style for search bar -->
   <Style Selector="TextBox#NoPadOrBorder:focus /template/ Border#PART_BorderElement">
 
     <Setter Property="BorderThickness" Value="0" />
@@ -21,4 +21,19 @@
   <Style Selector="TextBox#NoPadOrBorder">
     <Setter Property="BorderThickness" Value="0"/>
   </Style>
+
+  <!-- Scroll bar style for better scrolling -->
+  <Style Selector="ScrollViewer#BetterScrollViewer /template/ ScrollBar">
+    <Setter Property="Background" Value="LightGray"/>
+    <Setter Property="BorderBrush" Value="DarkGray"/>
+    <Setter Property="FlowDirection" Value="LeftToRight"/>
+    <Setter Property="AllowAutoHide" Value="False"/>
+    
+  </Style>
+  <Style Selector="ScrollViewer#BetterScrollViewer /template/ Thumb">
+    <Setter Property="Background" Value="LightGray"/>
+    <Setter Property="RenderTransform" Value="none"/>
+  </Style>
+
+  
 </Styles>

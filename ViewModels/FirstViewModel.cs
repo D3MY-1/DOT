@@ -9,6 +9,12 @@ namespace DOT.ViewModels
 {
     public class FirstViewModel : ViewModelBase
     {
+        private MainViewModel _mainViewModel;
+
+        public FirstViewModel(MainViewModel model)
+        {
+            _mainViewModel = model;
+        }
 
         private string? _searchText;
 
