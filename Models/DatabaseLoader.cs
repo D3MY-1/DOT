@@ -38,8 +38,6 @@ namespace DOT.Models
             return Items.Where(item => item.type == type).ToList();
         }
 
-        static public   
-
-        List<Item> Items;
+        static public List<Item> Items;
     }
 }

@@ -21,20 +21,17 @@ namespace DOT.ViewModels
 
         private DatabaseLoader loader;
 
-        private MainViewModel _mainViewModel;
-
-        public SecondViewModel(MainViewModel mainViewModel)
+        public SecondViewModel(MainViewModel mvm,string str)
         {
             loader = new DatabaseLoader();
-            var v = loader.GetItemByType("Shoes");
+            var v = loader.GetItemByType(str);
 
             var ls = new List<ItemViewModel>();
             foreach (var a in v)
             {
-                ls.Add(new ItemViewModel(a));
+                ls.Add(new ItemViewModel(a,mvm));
             }
             Buttons = new ObservableCollection<ItemViewModel>(ls);
-            _mainViewModel = mainViewModel;
         }
     }
 }

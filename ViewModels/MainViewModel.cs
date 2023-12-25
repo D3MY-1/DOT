@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System.Collections.ObjectModel;
+using System;
 
 namespace DOT.ViewModels;
 
@@ -15,15 +16,46 @@ public class MainViewModel : ViewModelBase
         set => this.RaiseAndSetIfChanged(ref _contentViewModel, value);
     }
 
-    public FirstViewModel FirstView { get; }
-    public SecondViewModel SecondView { get; }
+    private FirstViewModel FirstView { get; set; }
+    private SecondViewModel SecondView { get; set; }
 
 
 
     public MainViewModel()
     {
         FirstView = new FirstViewModel(this);
-        SecondView = new SecondViewModel(this);
+        //SecondView = new SecondViewModel(this);
+        _contentViewModel = FirstView;
+        
+    }
+
+    public enum ViewModelEnum{
+        First,
+        Second,
+        Third,
+    }
+
+    public void ChangeViewModel(ViewModelEnum en,object? obj)
+    {
+        switch (en)
+        {
+            case ViewModelEnum.First:
+                FirstView = new FirstViewModel(this);
+                ContentViewModel = FirstView; 
+                break;
+            case ViewModelEnum.Second:
+                ArgumentNullException.ThrowIfNull(obj,"obj cannot be null in here!");
+                SecondView = new SecondViewModel(this, (string)obj);
+                ContentViewModel = SecondView;
+                break;
+            case ViewModelEnum.Third:
+                //ContentViewModel = new ThirdViewModel(this,(Item)obj)
+                break;
+        }
+    }
+
+    public void ChangeFrom3To2()
+    {
         _contentViewModel = SecondView;
     }
 

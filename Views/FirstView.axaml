@@ -23,26 +23,15 @@
       <ScrollViewer.GestureRecognizers>
         <ScrollGestureRecognizer CanHorizontallyScroll="True" CanVerticallyScroll="True"/>
       </ScrollViewer.GestureRecognizers>
-      <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 16 0 0"   Orientation="Vertical">
-        <WrapPanel.Styles>
-          <Style Selector="Button">
-            <Setter Property="Width" Value="300"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Height" Value="200"/>
-          </Style>
-        </WrapPanel.Styles>
 
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-
-      </WrapPanel>
+      <ItemsControl ItemsSource="{Binding Buttons}" Margin="10" Background="Transparent">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+      
     </ScrollViewer>
   </DockPanel>
 </UserControl>

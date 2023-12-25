@@ -23,16 +23,15 @@ namespace DOT.ViewModels
 
         private int numberClicked = 0;
 
+        //public static MainViewModel
+
         public ReactiveCommand<Unit, Unit> Command { get; }
-        public ItemViewModel(Item item)
+
+        public ItemViewModel(Item item,MainViewModel mvm)
         {
             _content = item;
             _cover = Bitmap.DecodeToWidth(_content.LoadMainImage(),400);
-            Command = ReactiveCommand.Create(() =>
-            {
-                numberClicked += 1;
-                
-            });
+            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First,null)); 
             
         }
     }
