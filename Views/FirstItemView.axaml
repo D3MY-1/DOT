@@ -6,19 +6,21 @@
              x:Class="DOT.Views.FirstItemView"
              xmlns:vm="using:DOT.ViewModels"
              x:DataType="vm:FirstItemViewModel"
-             Width="300"
+             Width="320"
              Height="200">
   
   <StackPanel Spacing="10" Width="300">
     
     
-    <Button Background ="Transparent"
-            
+    <Button
            Height="200" Width="300"
             Command="{Binding Command}"
             CornerRadius="15"
               >
-      <TextBlock Margin="20" FontFamily="Calibri" FontSize="26" Text="{Binding Label}"/>
+      <StackPanel Orientation="Horizontal">
+        <Image Width="200" Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
+        <TextBlock Margin="20" FontFamily="Calibri" FontSize="26" Text="{Binding Label}"/>
+      </StackPanel>
     </Button >
   </StackPanel>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using Avalonia.Media.Imaging;
+﻿using Avalonia.Controls;
+using Avalonia.Media.Imaging;
 using DOT.Models;
 using ReactiveUI;
 using System;
@@ -15,6 +16,10 @@ namespace DOT.ViewModels
         
 
         public string Label { get; }
+
+        private Bitmap _cover;
+
+        public Bitmap Cover => _cover;
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
