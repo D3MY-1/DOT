@@ -15,13 +15,11 @@ namespace DOT.ViewModels
     {
         private Item _content;
 
-        public string Name => _content.name;
+        public string Name => _content.Name;
 
         private Bitmap _cover;
 
         public Bitmap Cover => _cover;
-
-        private int numberClicked = 0;
 
         //public static MainViewModel
 
@@ -30,7 +28,7 @@ namespace DOT.ViewModels
         public ItemViewModel(Item item,MainViewModel mvm)
         {
             _content = item;
-            _cover = Bitmap.DecodeToWidth(_content.LoadMainImage(),400);
+            _cover = Bitmap.DecodeToWidth(_content.LoadImage(),400);
             Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First,null)); 
             
         }

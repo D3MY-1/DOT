@@ -1,0 +1,78 @@
+[
+  {
+    "ImageName": "Shoes.png",
+    "Name": "Shoes",
+    "Filters": [
+      "Size",
+      "Surface",
+      "Upper",
+      "Brand"
+    ],
+    "Items": [
+      {
+        "Price": 100.0,
+        "Name": "Sneakers",
+        "FilterValues": [
+          "44",
+          "Road",
+          "Synthetic",
+          "Adidas"
+        ],
+        "ImageName": "Sneakers.png"
+      },
+      {
+        "Price": 46.0,
+        "Name": "Some",
+        "FilterValues": [
+          "39",
+          "Trail",
+          "Synthetic",
+          "Adidas"
+        ],
+        "ImageName": "Sneakers.png"
+      },
+      {
+        "Price": 426.0,
+        "Name": "Lol",
+        "FilterValues": [
+          "319",
+          "Trail",
+          "Synthetic",
+          "Adidas"
+        ],
+        "ImageName": "Sneakers.png"
+      }
+    ]
+  },
+  {
+    "ImageName": "JacketMain.png",
+    "Name": "Jacket",
+    "Filters": [
+      "Size",
+      "Material",
+      "Brand"
+    ],
+    "Items": [
+      {
+        "Price": 100.0,
+        "Name": "Jacket",
+        "FilterValues": [
+          "M",
+          "Synthetic",
+          "Nike"
+        ],
+        "ImageName": "Jacket.png"
+      },
+      {
+        "Price": 59.0,
+        "Name": "New Jacket",
+        "FilterValues": [
+          "L",
+          "Leather",
+          "Gucci"
+        ],
+        "ImageName": "Jacket.png"
+      }
+    ]
+  }
+]

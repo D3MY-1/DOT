@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 namespace DOT.ViewModels
 {
@@ -14,16 +15,22 @@ namespace DOT.ViewModels
     {
         private MainViewModel _mainViewModel;
 
-        public FirstViewModel(MainViewModel mvm)
+        private DatabaseLoader _databaseLoader;
+
+        public FirstViewModel(MainViewModel mvm) 
         {
             _mainViewModel = mvm;
 
+            _databaseLoader = new DatabaseLoader();
+
+            var Types = _databaseLoader.GetTypes();
+
             var ls = new List<FirstItemViewModel>();
 
-            var a = new List<string> { "Air_Flow"};
-
-            ls.Add(new FirstItemViewModel("Shoes", mvm));
-            ls.Add(new FirstItemViewModel("Jach", mvm));
+            foreach ( var type in Types )
+            {
+                ls.Add(new FirstItemViewModel(type,mvm));
+            }
 
             Buttons = new ObservableCollection<FirstItemViewModel>(ls);
         }

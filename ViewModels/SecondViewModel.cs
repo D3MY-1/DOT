@@ -21,10 +21,9 @@ namespace DOT.ViewModels
 
         private DatabaseLoader loader;
 
-        public SecondViewModel(MainViewModel mvm,string str)
+        public SecondViewModel(MainViewModel mvm,Models.Type type)
         {
-            loader = new DatabaseLoader();
-            var v = loader.GetItemByType(str);
+            var v = type.Items;
 
             var ls = new List<ItemViewModel>();
             foreach (var a in v)

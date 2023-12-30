@@ -1,43 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace DOT.Models
 {
     public class DatabaseLoader
     {
+        private const string DBPATH = "db.json";
+        private const string AssetsPath = "./Assets/";
         public DatabaseLoader()
         {
-            Items = new()
-            {
-                new Item("Shoes","Air flow",new List<string>{"Air_flow" }),
-                new Item("Shoes","Air kicker",new List < string > { "Air_kicker" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Shoes","Mega flow",new List < string > { "Mega_flow" }),
-                new Item("Jach","Ultra flow",new List < string > { "Ultra_flow" })
-            };
+            string json = File.ReadAllText(AssetsPath + DBPATH); //Add error checking here.
+            Types = JsonConvert.DeserializeObject<List<Type>>(json);
+
+
         }
 
-        public List<Item> GetItemByType(string type)
+        public List<Item> GetItemsByTypeName(string type)
         {
-            return Items.Where(item => item.type == type).ToList();
+            return Types.Where(item => item.Name == type).First().Items; // Add error checking here.
         }
 
-        static public List<Item> Items;
+        public List<Type> GetTypes()
+        {
+            return Types;
+        }
+
+        public static Stream LoadImageFromAssets(string ImageName)
+        {
+            return File.OpenRead(AssetsPath + ImageName);
+        }
+
+
+        public List<Type> Types;
+
     }
 }

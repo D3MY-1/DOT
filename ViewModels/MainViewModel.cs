@@ -45,7 +45,7 @@ public class MainViewModel : ViewModelBase
                 break;
             case ViewModelEnum.Second:
                 ArgumentNullException.ThrowIfNull(obj,"obj cannot be null in here!");
-                SecondView = new SecondViewModel(this, (string)obj);
+                SecondView = new SecondViewModel(this, (Models.Type)obj);
                 ContentViewModel = SecondView;
                 break;
             case ViewModelEnum.Third:

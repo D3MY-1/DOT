@@ -13,9 +13,11 @@ namespace DOT.ViewModels
 {
     public class FirstItemViewModel : ViewModelBase
     {
-        
 
-        public string Label { get; }
+
+        public string Label => _type.Name;
+
+        private Models.Type _type;
 
         private Bitmap _cover;
 
@@ -23,10 +25,10 @@ namespace DOT.ViewModels
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
-        public FirstItemViewModel(string label, MainViewModel mvm)
+        public FirstItemViewModel(Models.Type type, MainViewModel mvm)
         {
-            Label = label;
-            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Second,Label));
+            _type = type;
+            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Second,type));
         }
     }
 }
