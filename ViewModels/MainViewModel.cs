@@ -23,7 +23,9 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
+        
         FirstView = new FirstViewModel(this);
+        Logger.Instance.Log("Data context is equal FirstView");
         //SecondView = new SecondViewModel(this);
         _contentViewModel = FirstView;
         
@@ -37,25 +39,35 @@ public class MainViewModel : ViewModelBase
 
     public void ChangeViewModel(ViewModelEnum en,object? obj)
     {
-        switch (en)
+        Logger.Instance.Log($"ContentViewModel is changed to {en.ToString()} ViewModel");
+        try
         {
-            case ViewModelEnum.First:
-                FirstView = new FirstViewModel(this);
-                ContentViewModel = FirstView; 
-                break;
-            case ViewModelEnum.Second:
-                ArgumentNullException.ThrowIfNull(obj,"obj cannot be null in here!");
-                SecondView = new SecondViewModel(this, (Models.Type)obj);
-                ContentViewModel = SecondView;
-                break;
-            case ViewModelEnum.Third:
-                //ContentViewModel = new ThirdViewModel(this,(Item)obj)
-                break;
+            switch (en)
+            {
+                case ViewModelEnum.First:
+                    FirstView = new FirstViewModel(this);
+                    ContentViewModel = FirstView;
+                    break;
+                case ViewModelEnum.Second:
+                    ArgumentNullException.ThrowIfNull(obj, "obj cannot be null in here!");
+                    SecondView = new SecondViewModel(this, (Models.Type)obj);
+                    ContentViewModel = SecondView;
+                    break;
+                case ViewModelEnum.Third:
+                    //ContentViewModel = new ThirdViewModel(this,(Item)obj)
+                    break;
+            }
         }
+        catch (Exception ex)
+        {
+            Logger.Instance.Log($"Error Message : {ex.Message}");
+        }
+        
     }
 
     public void ChangeFrom3To2()
     {
+        Logger.Instance.Log($"ContentViewModel is changed from Third ViewModel to Second ViewModel");
         _contentViewModel = SecondView;
     }
 

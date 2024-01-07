@@ -19,18 +19,26 @@ namespace DOT.ViewModels
 
         public FirstViewModel(MainViewModel mvm) 
         {
+            Logger.Instance.Log("Initializing FirstViewModel");
             _mainViewModel = mvm;
 
             _databaseLoader = new DatabaseLoader();
 
-            var Types = _databaseLoader.GetTypes();
-
             var ls = new List<FirstItemViewModel>();
-
-            foreach ( var type in Types )
+            try
             {
-                ls.Add(new FirstItemViewModel(type,mvm));
+                var Types = _databaseLoader.GetTypes();
+
+                foreach (var type in Types)
+                {
+                    ls.Add(new FirstItemViewModel(type, mvm));
+                }
             }
+            catch (Exception ex) 
+            {
+                Logger.Instance.Log($"Error initializing FirstViewModel class Error Message : {ex.Message}");
+            }
+            
 
             Buttons = new ObservableCollection<FirstItemViewModel>(ls);
         }

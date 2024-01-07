@@ -27,9 +27,17 @@ namespace DOT.ViewModels
 
         public ItemViewModel(Item item,MainViewModel mvm)
         {
-            _content = item;
-            _cover = Bitmap.DecodeToWidth(_content.LoadImage(),400);
-            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First,null)); 
+            try
+            {
+                _content = item;
+                _cover = Bitmap.DecodeToWidth(_content.LoadImage(), 400);
+                Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First, null));
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
+            }
+            
             
         }
     }
