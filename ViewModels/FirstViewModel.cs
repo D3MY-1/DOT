@@ -4,7 +4,10 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Schema;
@@ -24,33 +27,57 @@ namespace DOT.ViewModels
 
             _databaseLoader = new DatabaseLoader();
 
-            var ls = new List<FirstItemViewModel>();
+            
+
+            _types = new List<FirstItemViewModel>();
             try
             {
                 var Types = _databaseLoader.GetTypes();
 
                 foreach (var type in Types)
                 {
-                    ls.Add(new FirstItemViewModel(type, mvm));
+                    _types.Add(new FirstItemViewModel(type, mvm));
                 }
             }
             catch (Exception ex) 
             {
                 Logger.Instance.Log($"Error initializing FirstViewModel class Error Message : {ex.Message}");
             }
-            
 
-            Buttons = new ObservableCollection<FirstItemViewModel>(ls);
+            this.WhenAnyValue(x => x.SearchText)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(PerformSearch!);
+
+            DisplayButtons = new ObservableCollection<FirstItemViewModel>(_types);
         }
 
         private string? _searchText;
 
-        private ObservableCollection<FirstItemViewModel> _buttons;
+        private ObservableCollection<FirstItemViewModel> _displayButtons;
 
-        public ObservableCollection<FirstItemViewModel> Buttons
+
+        private List<FirstItemViewModel> _types;
+        public ReactiveCommand<Unit, Unit> SearchCommand { get; }
+
+
+        public void PerformSearch(string s) // Need more advanced algorithm.
         {
-            get => _buttons;
-            set => this.RaiseAndSetIfChanged(ref _buttons, value);
+            if (s == null) { return; }
+            DisplayButtons.Clear();
+            foreach (var i in _types)
+            {
+                if (i.Label.ToUpper().Contains(s.ToUpper()))
+                {
+                    DisplayButtons.Add(i);
+                }
+            }
+            
+        }
+
+        public ObservableCollection<FirstItemViewModel> DisplayButtons
+        {
+            get => _displayButtons;
+            set => this.RaiseAndSetIfChanged(ref _displayButtons, value);
         }
 
         public string? SearchText
