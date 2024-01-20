@@ -1,9 +1,11 @@
-﻿using DOT.Models;
+﻿using Avalonia.Styling;
+using DOT.Models;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,11 +15,23 @@ namespace DOT.ViewModels
     {
         private ObservableCollection<ItemViewModel> _buttons;
 
+        private string _searchText;
+
+        private List<ItemViewModel> _items;
+
+        public string SearchText
+        {
+            get => _searchText;
+            set=> this.RaiseAndSetIfChanged(ref _searchText, value);
+        }
+
         public ObservableCollection<ItemViewModel> Buttons
         {
             get => _buttons;
             set => this.RaiseAndSetIfChanged(ref _buttons, value);
         }
+
+        
 
         private DatabaseLoader loader;
 
@@ -26,12 +40,30 @@ namespace DOT.ViewModels
             Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");
             var v = type.Items;
 
-            var ls = new List<ItemViewModel>();
+            _items = new List<ItemViewModel>();
             foreach (var a in v)
             {
-                ls.Add(new ItemViewModel(a,mvm));
+                _items.Add(new ItemViewModel(a,mvm));
             }
-            Buttons = new ObservableCollection<ItemViewModel>(ls);
+            Buttons = new ObservableCollection<ItemViewModel>(_items);
+
+            this.WhenAnyValue(x => x.SearchText)
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(PerformSearch!);
+        }
+
+        public void PerformSearch(string s) // Need more advanced algorithm.
+        {
+            if (s == null) { return; }
+            Buttons.Clear();
+            foreach (var i in _items)
+            {
+                if (i.Name.ToUpper().Contains(s.ToUpper()))
+                {
+                    Buttons.Add(i);
+                }
+            }
+
         }
     }
 }
