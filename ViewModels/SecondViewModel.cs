@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace DOT.ViewModels
         private string _searchText;
 
         private List<ItemViewModel> _items;
+
+        public ReactiveCommand<Unit, Unit> Command { get; }
 
         public string SearchText
         {
@@ -50,6 +53,7 @@ namespace DOT.ViewModels
             this.WhenAnyValue(x => x.SearchText)
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(PerformSearch!);
+            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First, null));
         }
 
         public void PerformSearch(string s) // Need more advanced algorithm.

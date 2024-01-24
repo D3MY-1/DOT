@@ -31,7 +31,13 @@
         </ItemsControl>
       </ScrollViewer>
     </StackPanel>
+
+    <StackPanel>
+      <Button Margin="20" Command="{Binding Command}">
+        Back
+      </Button>
+      <TextBox Margin="10 10 0 10" Grid.Column="0" HorizontalAlignment="Stretch" Background="Red">Future filters</TextBox>
+    </StackPanel>
     
-    <TextBox Margin="10 10 0 10" Grid.Column="0" Background="Red">Future filters</TextBox>
   </Grid>
 </UserControl>

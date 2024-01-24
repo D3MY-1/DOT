@@ -29,6 +29,14 @@ namespace DOT.ViewModels
         {
             _type = type;
             Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Second,type));
+            try
+            {
+                _cover = Bitmap.DecodeToWidth(_type.LoadImage(), 400);
+            }
+            catch (Exception ex)
+            {
+                Logger.Instance.Log($"Error initializing FirstItemViewModel class Error Message : {ex.Message}");
+            }
         }
     }
 }

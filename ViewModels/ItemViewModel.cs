@@ -31,7 +31,6 @@ namespace DOT.ViewModels
             {
                 _content = item;
                 _cover = Bitmap.DecodeToWidth(_content.LoadImage(), 400);
-                Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First, null));
             }
             catch (Exception ex)
             {
