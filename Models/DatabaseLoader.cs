@@ -43,29 +43,51 @@ namespace DOT.Models
 
         }
 
-        public List<Item> GetItemsByTypeName(string type)
-        {
-            return Types.Where(item => item.Name == type).First().Items; // Add error checking here.
-        }
-
         public List<Type> GetTypes()
         {
             return Types;
         }
 
-        public static Stream LoadImageFromAssets(string ImageName)
+        public static Stream? LoadImageFromAssets(string ImageName,bool many = false)
         {
+            ImageName = ImageName + ".png";
             if (File.Exists(AssetsPath + ImageName))
             {
                 return File.OpenRead(AssetsPath + ImageName);
             }
             else
             {
-                Logger.Instance.Log($"Didn't find image : {ImageName}");
+                if(!many)
+                    Logger.Instance.Log($"Didn't find image : {ImageName}");
                 return null;
             }
             
             
+        }
+
+        public static List<Stream>? LoadSequentialImages(string startImageName)
+        {
+            int i = 1;
+            List<Stream> images = new List<Stream>();
+            var im = LoadImageFromAssets(startImageName);
+            if(im != null)
+            {
+                images.Add(im);
+            }else
+            {
+                return null;
+            }
+            while (true)
+            {
+                var newName = startImageName + i;
+                im = LoadImageFromAssets(newName,true);
+                if (im == null)
+                {
+                    return images;
+                }
+                images.Add(im);
+
+            }
         }
 
 

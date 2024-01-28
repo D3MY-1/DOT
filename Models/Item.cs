@@ -16,11 +16,14 @@ namespace DOT.Models
         public string ImageName { get; set; }
         public List<string> Filters { get; set; }
         public List<Item>? Items { get; set; }
-        public Stream LoadImage()
+        public Stream? LoadImage()
         {
             return DatabaseLoader.LoadImageFromAssets(ImageName);
         }
-        
+        public List<Stream>? LoadAllImages()
+        {
+            return DatabaseLoader.LoadSequentialImages(ImageName);
+        }
 
     }
 
@@ -31,9 +34,13 @@ namespace DOT.Models
         public string Name { get; set; }
         public List<string> FilterValues { get; set; }
         public string ImageName { get; set; }
-        public Stream LoadImage()
+        public Stream? LoadImage()
         {
             return DatabaseLoader.LoadImageFromAssets(ImageName);
+        }
+        public List<Stream>? LoadAllImages()
+        {
+            return DatabaseLoader.LoadSequentialImages(ImageName);
         }
     }
 }
