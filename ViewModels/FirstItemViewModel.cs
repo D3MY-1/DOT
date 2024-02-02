@@ -19,9 +19,9 @@ namespace DOT.ViewModels
 
         private Models.Type _type;
 
-        private Bitmap _cover;
+        private Bitmap? _cover;
 
-        public Bitmap Cover => _cover;
+        public Bitmap? Cover => _cover;
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
@@ -35,7 +35,7 @@ namespace DOT.ViewModels
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log($"Error initializing FirstItemViewModel class Error Message : {ex.Message}");
+                _ = Logger.Instance.Log($"Error initializing FirstItemViewModel class Error Message : {ex.Message}");
             }
         }
     }

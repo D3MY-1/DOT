@@ -19,7 +19,7 @@ namespace DOT.Models
         
         public DatabaseLoader()
         {
-            Logger.Instance.Log("DatabaseLoader Initializing");
+            _ = Logger.Instance.Log("DatabaseLoader Initializing");
             try
             {
                 if (!File.Exists(AssetsPath + DBPATH))
@@ -38,7 +38,7 @@ namespace DOT.Models
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log($"Error Message : {ex.Message}");
+                _ = Logger.Instance.Log($"Error Message : {ex.Message}");
             }
 
         }
@@ -58,7 +58,7 @@ namespace DOT.Models
             else
             {
                 if(!many)
-                    Logger.Instance.Log($"Didn't find image : {ImageName}");
+                    _ = Logger.Instance.Log($"Didn't find image : {ImageName}");
                 return null;
             }
             

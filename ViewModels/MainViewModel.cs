@@ -25,7 +25,7 @@ public class MainViewModel : ViewModelBase
     {
         
         FirstView = new FirstViewModel(this);
-        Logger.Instance.Log("Data context is equal FirstView");
+        _ = Logger.Instance.Log("Data context is equal FirstView");
         //SecondView = new SecondViewModel(this);
         _contentViewModel = FirstView;
         
@@ -39,7 +39,7 @@ public class MainViewModel : ViewModelBase
 
     public void ChangeViewModel(ViewModelEnum en,object? obj)
     {
-        Logger.Instance.Log($"ContentViewModel is changed to {en.ToString()} ViewModel");
+        _ = Logger.Instance.Log($"ContentViewModel is changed to {en.ToString()} ViewModel");
         try
         {
             switch (en)
@@ -60,14 +60,14 @@ public class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            Logger.Instance.Log($"Error Message : {ex.Message}");
+            _ = Logger.Instance.Log($"Error Message : {ex.Message}");
         }
         
     }
 
     public void ChangeFrom3To2()
     {
-        Logger.Instance.Log($"ContentViewModel is changed from Third ViewModel to Second ViewModel");
+        _ = Logger.Instance.Log($"ContentViewModel is changed from Third ViewModel to Second ViewModel");
         _contentViewModel = SecondView;
     }
 

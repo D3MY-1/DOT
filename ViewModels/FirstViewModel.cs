@@ -22,7 +22,7 @@ namespace DOT.ViewModels
 
         public FirstViewModel(MainViewModel mvm) 
         {
-            Logger.Instance.Log("Initializing FirstViewModel");
+            _ = Logger.Instance.Log("Initializing FirstViewModel");
             _mainViewModel = mvm;
 
             _databaseLoader = new DatabaseLoader();
@@ -41,7 +41,7 @@ namespace DOT.ViewModels
             }
             catch (Exception ex) 
             {
-                Logger.Instance.Log($"Error initializing FirstViewModel class Error Message : {ex.Message}");
+                _  =Logger.Instance.Log($"Error initializing FirstViewModel class Error Message : {ex.Message}");
             }
 
             this.WhenAnyValue(x => x.SearchText)

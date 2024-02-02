@@ -40,7 +40,7 @@ namespace DOT.ViewModels
 
         public SecondViewModel(MainViewModel mvm,Models.Type type)
         {
-            Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");
+            _ = Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");
             var v = type.Items;
 
             _items = new List<ItemViewModel>();
