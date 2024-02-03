@@ -48,9 +48,14 @@ namespace DOT.Models
             return Types;
         }
 
-        public static Stream? LoadImageFromAssets(string ImageName,bool many = false)
+        public static Stream? LoadImageFromAssets(string ImageName,string color = "",bool many = false)
         {
-            ImageName = ImageName + ".png";
+            if(color.Length > 0)
+            {
+                ImageName = ImageName + color + ".png";
+            }else
+                ImageName = ImageName + ".png";
+
             if (File.Exists(AssetsPath + ImageName))
             {
                 return File.OpenRead(AssetsPath + ImageName);
@@ -65,11 +70,11 @@ namespace DOT.Models
             
         }
 
-        public static List<Stream>? LoadSequentialImages(string startImageName)
+        public static List<Stream>? LoadSequentialImages(string startImageName,string color = "")
         {
             int i = 1;
             List<Stream> images = new List<Stream>();
-            var im = LoadImageFromAssets(startImageName);
+            var im = LoadImageFromAssets(startImageName,color);
             if(im != null)
             {
                 images.Add(im);
@@ -79,8 +84,8 @@ namespace DOT.Models
             }
             while (true)
             {
-                var newName = startImageName + i;
-                im = LoadImageFromAssets(newName,true);
+                var newName = startImageName + color + i;
+                im = LoadImageFromAssets(newName,"",true);
                 if (im == null)
                 {
                     return images;

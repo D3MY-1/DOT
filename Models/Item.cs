@@ -33,14 +33,14 @@ namespace DOT.Models
         public float Price { get; set; }
         public string Name { get; set; }
         public List<string> FilterValues { get; set; }
-        public string ImageName { get; set; }
+        public List<string> colors { get; set; }
         public Stream? LoadImage()
         {
-            return DatabaseLoader.LoadImageFromAssets(ImageName);
+            return DatabaseLoader.LoadImageFromAssets(Name);
         }
         public List<Stream>? LoadAllImages()
         {
-            return DatabaseLoader.LoadSequentialImages(ImageName);
+            return DatabaseLoader.LoadSequentialImages(Name);
         }
     }
 }
