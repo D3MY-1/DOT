@@ -36,7 +36,33 @@
       <Button Margin="20" Command="{Binding Command}">
         Back
       </Button>
-      <TextBox Margin="10 10 0 10" Grid.Column="0" HorizontalAlignment="Stretch" Background="Red">Future filters</TextBox>
+      <TreeView BorderThickness="1">
+        <TreeViewItem Header="Price">
+          <StackPanel Orientation="Horizontal">
+            <TextBox Watermark="From"></TextBox>
+            <TextBox Watermark="To"></TextBox>
+          </StackPanel>
+        </TreeViewItem>
+      </TreeView>
+      <ItemsControl ItemsSource="{Binding FilterItems}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <TreeView BorderThickness="1">
+              <TreeViewItem Header="{Binding Name}" IsExpanded="{Binding IsExpanded}">
+                <ItemsControl ItemsSource="{Binding Values}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <CheckBox Content="{Binding Name}"
+                                IsChecked="{Binding IsChecked}"/>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </TreeViewItem>
+            </TreeView>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      
     </StackPanel>
     
   </Grid>

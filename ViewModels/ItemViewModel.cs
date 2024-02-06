@@ -25,6 +25,11 @@ namespace DOT.ViewModels
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
+        public List<string> GetFilterValues()
+        {
+            return _content.FilterValues;
+        }
+
         public ItemViewModel(Item item,MainViewModel mvm)
         {
             try
@@ -34,7 +39,7 @@ namespace DOT.ViewModels
             }
             catch (Exception ex)
             {
-                Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
+                _ = Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
             }
             
             
