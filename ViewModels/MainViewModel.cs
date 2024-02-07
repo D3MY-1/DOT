@@ -54,7 +54,8 @@ public class MainViewModel : ViewModelBase
                     ContentViewModel = SecondView;
                     break;
                 case ViewModelEnum.Third:
-                    //ContentViewModel = new ThirdViewModel(this,(Item)obj)
+                    ArgumentNullException.ThrowIfNull(obj, "obj cannot be null in here!");
+                    ContentViewModel = new ThirdViewModel(this, (Models.Item)obj);
                     break;
             }
         }
@@ -68,7 +69,7 @@ public class MainViewModel : ViewModelBase
     public void ChangeFrom3To2()
     {
         _ = Logger.Instance.Log($"ContentViewModel is changed from Third ViewModel to Second ViewModel");
-        _contentViewModel = SecondView;
+        ContentViewModel = SecondView;
     }
 
 }

@@ -41,8 +41,8 @@ namespace DOT.ViewModels
             {
                 _ = Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
             }
-            
-            
+
+            Command = ReactiveCommand.Create(() => { mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Third, item); });
         }
     }
 }
