@@ -1,14 +1,8 @@
-﻿using DOT.Models;
-using ReactiveUI;
+﻿using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
 
 namespace DOT.ViewModels
 {
@@ -22,19 +16,19 @@ namespace DOT.ViewModels
         }
 
         private readonly SecondViewModel _secondViewModel;
-        
-        public FilterItem(string nme,SecondViewModel svm)
+
+        public FilterItem(string nme, SecondViewModel svm)
         {
             _name = nme;
             _secondViewModel = svm;
             this.WhenAnyValue(x => x.IsChecked)
                 .Subscribe(StartSearch!);
-            
+
         }
 
         private void StartSearch(bool b)
         {
-           _secondViewModel.PerformSearch();
+            _secondViewModel.PerformSearch();
         }
 
         private bool _isChecked;
@@ -78,7 +72,7 @@ namespace DOT.ViewModels
             var ret = new List<string>();
             foreach (var i in _values)
             {
-                if(i.IsChecked)
+                if (i.IsChecked)
                 {
                     ret.Add(i.Name);
                 }
@@ -92,7 +86,7 @@ namespace DOT.ViewModels
 
             _values = new ObservableCollection<FilterItem>(values);
 
-            
+
         }
     }
 }

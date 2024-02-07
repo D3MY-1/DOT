@@ -14,7 +14,7 @@ public partial class App : Application
         AvaloniaXamlLoader.Load(this);
         Logger.Instance.Log("Initializing");
     }
-    
+
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)

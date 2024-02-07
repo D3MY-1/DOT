@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using Newtonsoft.Json;
 using System.IO;
-using System.Windows;
-using System.Security.Principal;
 
 //Error displaying in this function is only viable in windows.
 
@@ -16,7 +13,7 @@ namespace DOT.Models
         private const string AssetsPath = "./Assets/";
 
 
-        
+
         public DatabaseLoader()
         {
             _ = Logger.Instance.Log("DatabaseLoader Initializing");
@@ -48,12 +45,13 @@ namespace DOT.Models
             return Types;
         }
 
-        public static Stream? LoadImageFromAssets(string ImageName,string color = "",bool many = false)
+        public static Stream? LoadImageFromAssets(string ImageName, string color = "", bool many = false)
         {
-            if(color.Length > 0)
+            if (color.Length > 0)
             {
                 ImageName = ImageName + color + ".png";
-            }else
+            }
+            else
                 ImageName = ImageName + ".png";
 
             if (File.Exists(AssetsPath + ImageName))
@@ -62,30 +60,31 @@ namespace DOT.Models
             }
             else
             {
-                if(!many)
+                if (!many)
                     _ = Logger.Instance.Log($"Didn't find image : {ImageName}");
                 return null;
             }
-            
-            
+
+
         }
 
-        public static List<Stream>? LoadSequentialImages(string startImageName,string color = "")
+        public static List<Stream>? LoadSequentialImages(string startImageName, string color = "")
         {
             int i = 1;
             List<Stream> images = new List<Stream>();
-            var im = LoadImageFromAssets(startImageName,color);
-            if(im != null)
+            var im = LoadImageFromAssets(startImageName, color);
+            if (im != null)
             {
                 images.Add(im);
-            }else
+            }
+            else
             {
                 return null;
             }
             while (true)
             {
                 var newName = startImageName + color + i;
-                im = LoadImageFromAssets(newName,"",true);
+                im = LoadImageFromAssets(newName, "", true);
                 if (im == null)
                 {
                     return images;

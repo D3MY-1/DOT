@@ -1,13 +1,7 @@
-﻿using Avalonia.Controls;
-using Avalonia.Media.Imaging;
-using DOT.Models;
+﻿using Avalonia.Media.Imaging;
 using ReactiveUI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DOT.ViewModels
 {
@@ -28,7 +22,7 @@ namespace DOT.ViewModels
         public FirstItemViewModel(Models.Type type, MainViewModel mvm)
         {
             _type = type;
-            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Second,type));
+            Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Second, type));
             try
             {
                 _cover = Bitmap.DecodeToWidth(_type.LoadImage(), 400);

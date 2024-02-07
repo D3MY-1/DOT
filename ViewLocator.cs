@@ -1,7 +1,7 @@
-﻿using Avalonia.Controls.Templates;
-using Avalonia.Controls;
-using System;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Templates;
 using DOT.ViewModels;
+using System;
 
 namespace DOT;
 

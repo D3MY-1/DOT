@@ -1,15 +1,10 @@
-﻿using ReactiveUI;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DOT.Models
-{ 
-    
-    public class Type  
+{
+
+    public class Type
     {
         // PS SOMEHOW implement check for null values
         public string Name { get; set; }

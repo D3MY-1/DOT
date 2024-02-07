@@ -1,13 +1,9 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Media.Imaging;
+using DOT.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
-using DOT.Models;
-using Avalonia.Media.Imaging;
 
 namespace DOT.ViewModels
 {
@@ -30,7 +26,7 @@ namespace DOT.ViewModels
             return _content.FilterValues;
         }
 
-        public ItemViewModel(Item item,MainViewModel mvm)
+        public ItemViewModel(Item item, MainViewModel mvm)
         {
             try
             {

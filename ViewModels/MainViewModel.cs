@@ -1,12 +1,11 @@
 ﻿using ReactiveUI;
-using System.Collections.ObjectModel;
 using System;
 
 namespace DOT.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    
+
 
     private ViewModelBase _contentViewModel;
 
@@ -23,21 +22,22 @@ public class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        
+
         FirstView = new FirstViewModel(this);
         _ = Logger.Instance.Log("Data context is equal FirstView");
         //SecondView = new SecondViewModel(this);
         _contentViewModel = FirstView;
-        
+
     }
 
-    public enum ViewModelEnum{
+    public enum ViewModelEnum
+    {
         First,
         Second,
         Third,
     }
 
-    public void ChangeViewModel(ViewModelEnum en,object? obj)
+    public void ChangeViewModel(ViewModelEnum en, object? obj)
     {
         _ = Logger.Instance.Log($"ContentViewModel is changed to {en.ToString()} ViewModel");
         try
@@ -63,7 +63,7 @@ public class MainViewModel : ViewModelBase
         {
             _ = Logger.Instance.Log($"Error Message : {ex.Message}");
         }
-        
+
     }
 
     public void ChangeFrom3To2()
