@@ -90,6 +90,7 @@ namespace DOT.Models
                     return images;
                 }
                 images.Add(im);
+                i++;
 
             }
         }
