@@ -13,29 +13,33 @@ namespace DOT.Models
         public List<Item>? Items { get; set; }
         public Stream? LoadImage()
         {
-            return DatabaseLoader.LoadImageFromAssets(ImageName);
-        }
-        public List<Stream>? LoadAllImages()
-        {
-            return DatabaseLoader.LoadSequentialImages(ImageName);
+            return DatabaseLoader.LoadImageFromAssets(ImageName, "");
         }
 
     }
 
+    public class SubItem
+    {
+        public string ShopName { get; set; }
+        public List<string> Colors { get; set; }
+        public List<string> Sizes { get; set; }
+        public float Price { get; set; }
+    }
+
+
     public class Item
     {
         // PS SOMEHOW implement check for null values
-        public float Price { get; set; }
         public string Name { get; set; }
         public List<string> FilterValues { get; set; }
-        public List<string> colors { get; set; }
-        public Stream? LoadImage()
+        public List<SubItem> SubItems { get; set; }
+        public Stream? LoadSomeImage()
         {
-            return DatabaseLoader.LoadImageFromAssets(Name);
+            return DatabaseLoader.LoadImageFromAssets(Name, SubItems[0].Colors[0]);
         }
-        public List<Stream>? LoadAllImages()
+        public List<Stream>? LoadAllImages(string color)
         {
-            return DatabaseLoader.LoadSequentialImages(Name);
+            return DatabaseLoader.LoadSequentialImages(Name, color);
         }
     }
 }

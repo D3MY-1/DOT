@@ -45,14 +45,14 @@ namespace DOT.Models
             return Types;
         }
 
-        public static Stream? LoadImageFromAssets(string ImageName, string color = "", bool many = false)
+        public static Stream? LoadImageFromAssets(string ImageName, string color, bool many = false) // Need to remake for jpg
         {
             if (color.Length > 0)
             {
-                ImageName = ImageName + color + ".png";
+                ImageName = ImageName + color + ".jpg";
             }
             else
-                ImageName = ImageName + ".png";
+                ImageName = ImageName + ".jpg";
 
             if (File.Exists(AssetsPath + ImageName))
             {
