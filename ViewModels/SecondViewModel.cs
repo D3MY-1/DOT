@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 
 namespace DOT.ViewModels
 {
+
     public class SecondViewModel : ViewModelBase
     {
         private ObservableCollection<ItemViewModel> _buttons;
@@ -20,7 +21,15 @@ namespace DOT.ViewModels
 
         private ObservableCollection<FilterUpperItem> _filterItems;
 
+        private FilterUpperItem _colors;
+
         public ReactiveCommand<Unit, Unit> Command { get; }
+
+        public FilterUpperItem Colors
+        {
+            get => _colors;
+            set => this.RaiseAndSetIfChanged(ref _colors, value);
+        }
 
         public string SearchText
         {
@@ -63,14 +72,29 @@ namespace DOT.ViewModels
 
 
             _items = new List<ItemViewModel>();
+            var colItems = new List<FilterItem>();
+            var it = new HashSet<string>();
             foreach (var a in v)
             {
+                foreach (var sub in a.SubItems)
+                {
+                    foreach (var color in sub.Colors)
+                    {
+                        it.Add(color);
+                    }
+                }
+
                 _items.Add(new ItemViewModel(a, mvm));
                 for (var i = 0; i < type.Filters.Count; i++)
                 {
                     filterValue[i].Add(a.FilterValues[i]); // Too complicated
                 }
             }
+            foreach (var a in it)
+            {
+                colItems.Add(new FilterItem(a, this));
+            }
+            Colors = new FilterUpperItem("Color", colItems);
 
             _filterItems = new ObservableCollection<FilterUpperItem>();
 
@@ -107,14 +131,15 @@ namespace DOT.ViewModels
             var s = SearchText;
 
             Buttons.Clear();
-
+            var col = Colors.GetToggled();
             bool performFilterSearch = false;
+            bool performColorSearch = col.Count > 0;
             foreach (var item in _filterItems)
             {
                 if (item.GetToggled().Count > 0) { performFilterSearch = true; break; }
             }
 
-            if (!performFilterSearch && s == null)
+            if (!performFilterSearch && !performColorSearch && s == null)
             {
                 Buttons.Add(_items);
                 return;
@@ -125,10 +150,11 @@ namespace DOT.ViewModels
 
             foreach (var i in _items)
             {
+                bool isValid = true;
                 if (performFilterSearch)
                 {
                     var values = i.GetFilterValues();
-                    bool isValid = true;
+
                     for (var j = 0; j < values.Count; j++)
                     {
                         var v = FilterItems[j].GetToggled();
@@ -138,10 +164,24 @@ namespace DOT.ViewModels
                         isValid = false;
                         break;
                     }
-                    if (isValid)
-                        IfSimilarADD(i, s);
+
+
+
                 }
-                else
+                if (performColorSearch && isValid)
+                {
+                    isValid = false;
+                    foreach (var v in i.GetSubitems())
+                    {
+                        if (Helper.SharesAnyValueWith(v.Colors, col))
+                        {
+                            isValid = true;
+                            break;
+                        }
+                    }
+
+                }
+                if (isValid)
                     IfSimilarADD(i, s);
             }
 
@@ -159,6 +199,8 @@ namespace DOT.ViewModels
             if (item.Name.ToUpper().Contains(s.ToUpper()))
                 Buttons.Add(item);
         }
+
+
     }
 
 }

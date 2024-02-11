@@ -44,6 +44,19 @@
           </StackPanel>
         </TreeViewItem>
       </TreeView>
+      <TreeView>
+        <TreeViewItem Header="{Binding Colors.Name}" IsExpanded="{Binding Colors.IsExpanded}">
+          <ItemsControl ItemsSource="{Binding Colors.Values}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                      <CheckBox Content="{Binding Name}"
+                                IsChecked="{Binding IsChecked}"/>
+                    </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </TreeViewItem>
+        
+      </TreeView>
       <ItemsControl ItemsSource="{Binding FilterItems}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>

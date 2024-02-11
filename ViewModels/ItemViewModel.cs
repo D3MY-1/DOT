@@ -26,6 +26,11 @@ namespace DOT.ViewModels
             return _content.FilterValues;
         }
 
+        public List<SubItem> GetSubitems()
+        {
+            return _content.SubItems;
+        }
+
         public ItemViewModel(Item item, MainViewModel mvm)
         {
             try
