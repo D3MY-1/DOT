@@ -33,9 +33,9 @@ namespace DOT.Models
         public string Name { get; set; }
         public List<string> FilterValues { get; set; }
         public List<SubItem> SubItems { get; set; }
-        public Stream? LoadSomeImage()
+        public Stream? LoadSomeImage(string color)
         {
-            return DatabaseLoader.LoadImageFromAssets(Name, SubItems[0].Colors[0]);
+            return DatabaseLoader.LoadImageFromAssets(Name, color);
         }
         public List<Stream>? LoadAllImages(string color)
         {

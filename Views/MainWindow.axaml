@@ -9,7 +9,7 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Project"
         RequestedThemeVariant="Light"
-        CanResize="False"
+        CanResize="True"
         Height="747"
         Width="1424"
         

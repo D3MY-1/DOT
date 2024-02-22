@@ -36,7 +36,7 @@ namespace DOT.ViewModels
             try
             {
                 _content = item;
-                _cover = Bitmap.DecodeToWidth(_content.LoadSomeImage(), 400);
+                _cover = Bitmap.DecodeToWidth(_content.LoadSomeImage(_content.SubItems[0].Colors[0]), 400);
             }
             catch (Exception ex)
             {

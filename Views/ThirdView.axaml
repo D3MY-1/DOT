@@ -12,35 +12,93 @@
       HorizontalAlignment="Left">
       Back
     </Button>
-    <ListBox ItemsSource="{Binding Images}"
+      <Grid ColumnDefinitions="*,*" Grid.Column="0">
+        <ListBox ItemsSource="{Binding Images}"
              HorizontalAlignment="Left"
              Margin="0 30 0 0"
              SelectedIndex="{Binding SelectedImageIndex}"
              VerticalAlignment="Center">
-             
-        <ListBox.ItemTemplate>
-        <DataTemplate>
-          <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
-            <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
-          </Border>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    <ListBox.Styles>
-      <Style Selector="ListBoxItem">
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="Padding" Value="0"/>
-        <Setter Property="Width" Value="50"/>
-        <Setter Property="Height" Value="50"/>
-      <Setter Property="ClipToBounds" Value="True"/>
-        </Style>
-      <Style Selector="ListBoxItem:selected /template/ Border" >
-        <Setter Property="BorderBrush" Value="Black"/>
-      </Style>
-    </ListBox.Styles>
-    </ListBox>
+
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+                <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+              </Border>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+          <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+              <Setter Property="Margin" Value="0"/>
+              <Setter Property="Padding" Value="0"/>
+              <Setter Property="Grid.Column" Value="0"/>
+              <Setter Property="ClipToBounds" Value="True"/>
+            </Style>
+          </ListBox.Styles>
+        </ListBox>
+
+      </Grid>
+      
+    
   </StackPanel>
   <Image Grid.Column="1" Margin="0 0 20 0" Source="{Binding MainImage}"/>
-  <TextBlock Grid.Column="2" Background="Purple"></TextBlock>
+
+    <StackPanel Grid.Column="2">
+      <ListBox ItemsSource="{Binding Shops}"
+              HorizontalAlignment="Left"
+              Margin="0 30 0 0"
+              SelectedIndex="{Binding SelectedShopIndex}"
+              VerticalAlignment="Center">
+
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+              <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+          </Style>
+        </ListBox.Styles>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="5"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+
+      <ListBox ItemsSource="{Binding Colors}"
+               HorizontalAlignment="Left"
+               Margin="0 30 0 0"
+               SelectedIndex="{Binding SelectedColorIndex}"
+               VerticalAlignment="Center">
+
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+              <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+          </Style>
+        </ListBox.Styles>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="5"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+    </StackPanel>
+
+
   </Grid>
   
 </UserControl>

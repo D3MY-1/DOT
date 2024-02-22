@@ -25,14 +25,14 @@
         <ItemsControl ItemsSource="{Binding Buttons}" Margin="10" Background="Transparent">
           <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
-              <WrapPanel/>
+              <UniformGrid Columns="4"/>
             </ItemsPanelTemplate>
           </ItemsControl.ItemsPanel>
         </ItemsControl>
       </ScrollViewer>
     </StackPanel>
 
-    <StackPanel>
+    <StackPanel Grid.Column="0">
       <Button Margin="20" Command="{Binding Command}">
         Back
       </Button>
@@ -55,6 +55,9 @@
             </ItemsControl.ItemTemplate>
           </ItemsControl>
         </TreeViewItem>
+
+        
+          
         
       </TreeView>
       <ItemsControl ItemsSource="{Binding FilterItems}">
@@ -75,6 +78,8 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
+        
+      
       
     </StackPanel>
     
