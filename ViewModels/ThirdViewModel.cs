@@ -9,7 +9,7 @@ using System.Reactive;
 
 namespace DOT.ViewModels
 {
-    public class ButtonImage : ReactiveObject, ICloneable
+    public class ButtonImage : ReactiveObject
     {
         private string _borderColor = "LightGray";
 
@@ -47,10 +47,6 @@ namespace DOT.ViewModels
         {
             Image = img;
             Name = name;
-        }
-        public object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 
@@ -127,6 +123,7 @@ namespace DOT.ViewModels
 
         public ThirdViewModel(MainViewModel mvm, Item item)
         {
+
             _content = item;
 
             this.WhenAnyValue(x => x.SelectedImageIndex)
@@ -205,9 +202,7 @@ namespace DOT.ViewModels
             {
                 if (_col.ContainsKey(col))
                 {
-                    var b = (ButtonImage)_col[col][0].Clone();
-                    b.Name = col;
-                    a.Add(b);
+                    a.Add(new ButtonImage(_col[col][0].Image, col));
                 }
             }
             if (Colors != null && Colors.Count > 0)
