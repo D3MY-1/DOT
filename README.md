@@ -1,1 +1,1 @@
-# DOT
+# To compile this yourself you will also need [this](https://github.com/D3MY-1/DOT.Desktop) repository download them both put in one folder then if you're on Visual Studio open sln file in DOT folder and compile.
