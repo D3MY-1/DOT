@@ -7,11 +7,12 @@
              xmlns:vm="using:DOT.ViewModels"
              x:DataType="vm:ItemViewModel"
              >
-  <Viewbox Stretch="Uniform">
+  <Viewbox Stretch="Uniform" >
     <StackPanel Spacing="5">
-      <Button Background ="Transparent"
+      <Button Name="BetterButton"
               Command="{Binding Command}"
-              CornerRadius="15">
+              CornerRadius="15"
+              >
         <Image Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
       </Button >
       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>

@@ -34,6 +34,11 @@
     <Setter Property="Background" Value="LightGray"/>
     <Setter Property="RenderTransform" Value="none"/>
   </Style>
+  
+  <!-- Better button style-->
+  <Style Selector="Button#BetterButton">
+    <Setter Property="Background" Value="Transparent"/>
+  </Style>
 
   
 </Styles>

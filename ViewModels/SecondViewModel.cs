@@ -51,10 +51,6 @@ namespace DOT.ViewModels
 
 
 
-        private DatabaseLoader loader;
-
-
-
         public SecondViewModel(MainViewModel mvm, Models.Type type)
         {
             _ = Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");

@@ -5,22 +5,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DOT.Views.FirstItemView"
              xmlns:vm="using:DOT.ViewModels"
-             x:DataType="vm:FirstItemViewModel"
-             Width="320"
-             Height="200">
-  
-  <StackPanel Spacing="10" Width="300">
-    
-    
-    <Button
-           Height="200" Width="300"
-            Command="{Binding Command}"
-            CornerRadius="15"
+             x:DataType="vm:FirstItemViewModel">
+
+  <Viewbox Stretch="Uniform" HorizontalAlignment="Left">
+    <StackPanel Spacing="10">
+      <Button
+              Name="BetterButton"
+              Command="{Binding Command}"
+              CornerRadius="15"
               >
-      <StackPanel Orientation="Horizontal">
-        <Image Width="200" Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
-        <TextBlock Margin="20" FontFamily="Calibri" FontSize="26" Text="{Binding Label}"/>
-      </StackPanel>
-    </Button >
-  </StackPanel>
+        <StackPanel Orientation="Horizontal">
+          <Image Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
+          <TextBlock Margin="20" FontFamily="Calibri" FontSize="30" Text="{Binding Label}"/>
+        </StackPanel>
+      </Button >
+    </StackPanel>
+  </Viewbox>
+
 </UserControl>
