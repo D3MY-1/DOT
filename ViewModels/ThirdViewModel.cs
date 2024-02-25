@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Avalonia.Media.Imaging;
+using DOT.Models;
+using ReactiveUI;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive;
 
 namespace DOT.ViewModels
 {
@@ -118,42 +123,6 @@ namespace DOT.ViewModels
 
         public ThirdViewModel(MainViewModel mvm, Item item)
         {
-
-            this.WhenAnyValue(x => x.SelectedImageIndex)
-                .Subscribe(ReportChange!);
-
-            _selectedColor = "White";
-
-            var res = item.LoadAllImages(_selectedColor);
-
-            if (res == null)
-            {
-                _ = Logger.Instance.Log("Error : Loading images in ThirdViewModel");
-            }
-
-            Images = new ObservableCollection<ButtonImage>();
-            foreach (var i in res)
-                Images.Add(new ButtonImage(Bitmap.DecodeToWidth(i, 800)));
-            MainImage = Images[0].Image;
-            Images[0].BeActive();
-
-            this.WhenAnyValue(x => x.SelectedImageIndex)
-                .Subscribe(ReportChange!);
-
-            _selectedColor = "White";
-
-            var res = item.LoadAllImages(_selectedColor);
-
-            if (res == null)
-            {
-                _ = Logger.Instance.Log("Error : Loading images in ThirdViewModel");
-            }
-
-            Images = new ObservableCollection<ButtonImage>();
-            foreach (var i in res)
-                Images.Add(new ButtonImage(Bitmap.DecodeToWidth(i, 800)));
-            MainImage = Images[0].Image;
-            Images[0].BeActive();
 
             _content = item;
 
