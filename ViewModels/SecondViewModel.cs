@@ -10,6 +10,21 @@ using System.Reactive.Linq;
 namespace DOT.ViewModels
 {
 
+    public class StringNumericComparer : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            if (int.TryParse(x, out int xNum) && int.TryParse(y, out int yNum))
+            {
+                return xNum.CompareTo(yNum);
+            }
+            else
+            {
+                return string.Compare(x, y);
+            }
+        }
+    }
+
     public class SecondViewModel : ViewModelBase
     {
         private ObservableCollection<ItemViewModel> _buttons;
@@ -21,15 +36,11 @@ namespace DOT.ViewModels
 
         private ObservableCollection<FilterUpperItem> _filterItems;
 
-        private FilterUpperItem _colors;
+
+        private ObservableCollection<FilterUpperItem> _subFilterItems;
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
-        public FilterUpperItem Colors
-        {
-            get => _colors;
-            set => this.RaiseAndSetIfChanged(ref _colors, value);
-        }
 
         public string SearchText
         {
@@ -49,9 +60,22 @@ namespace DOT.ViewModels
             set => this.RaiseAndSetIfChanged(ref _filterItems, value);
         }
 
+        public ObservableCollection<FilterUpperItem> SubFilterItems
+        {
+            get => _subFilterItems;
+            set => this.RaiseAndSetIfChanged(ref _subFilterItems, value);
+        }
+
+        private static string transform(string text)
+        {
+            float n;
+            if (float.TryParse(text.Replace(",", "."), out n))
+                return Math.Floor(n).ToString();
+            return text;
+        }
 
 
-        public SecondViewModel(MainViewModel mvm, Models.Type type)
+        public SecondViewModel(MainViewModel mvm, Models.Type type) // Very bad system right now. Spaghetti mess.
         {
             _ = Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");
             var v = type.Items;
@@ -69,28 +93,55 @@ namespace DOT.ViewModels
 
             _items = new List<ItemViewModel>();
             var colItems = new List<FilterItem>();
-            var it = new HashSet<string>();
+            var sizeItems = new List<FilterItem>();
+            var priceItems = new List<FilterItem>();
+            var colors = new HashSet<string>();
+            var sizes = new List<string>();
+            var prices = new HashSet<string>();
+
             foreach (var a in v)
             {
-                foreach (var sub in a.SubItems)
+                foreach (var sub in a.SubItems) // Sub filters
                 {
                     foreach (var color in sub.Colors)
                     {
-                        it.Add(color);
+                        colors.Add(color);
                     }
+                    foreach (var size in sub.Sizes)
+                    {
+                        if (!sizes.Contains(transform(size)))
+                            sizes.Add(transform(size));
+                    }
+
+                    prices.Add(Math.Round(sub.Price, 2).ToString());
                 }
 
-                _items.Add(new ItemViewModel(a, mvm));
+                _items.Add(new ItemViewModel(a, mvm)); //Main Filters
                 for (var i = 0; i < type.Filters.Count; i++)
                 {
                     filterValue[i].Add(a.FilterValues[i]); // Too complicated
                 }
             }
-            foreach (var a in it)
+
+            sizes.Sort(new StringNumericComparer());
+
+            foreach (var a in colors)
             {
                 colItems.Add(new FilterItem(a, this));
             }
-            Colors = new FilterUpperItem("Color", colItems);
+            foreach (var a in sizes)
+                sizeItems.Add(new FilterItem(a, this));
+            foreach (var a in prices)
+                priceItems.Add(new FilterItem(a, this));
+
+
+
+            SubFilterItems = new ObservableCollection<FilterUpperItem>();
+
+
+            SubFilterItems.Add(new FilterUpperItem("Color", colItems));
+            SubFilterItems.Add(new FilterUpperItem("Size", sizeItems));
+
 
             _filterItems = new ObservableCollection<FilterUpperItem>();
 
@@ -127,15 +178,17 @@ namespace DOT.ViewModels
             var s = SearchText;
 
             Buttons.Clear();
-            var col = Colors.GetToggled();
+            var col = SubFilterItems[0].GetToggled();
+            var sizes = SubFilterItems[1].GetToggled();
+
             bool performFilterSearch = false;
-            bool performColorSearch = col.Count > 0;
+            bool performSubFilterSearch = col.Count > 0 || sizes.Count > 0;
             foreach (var item in _filterItems)
             {
                 if (item.GetToggled().Count > 0) { performFilterSearch = true; break; }
             }
 
-            if (!performFilterSearch && !performColorSearch && s == null)
+            if (!performFilterSearch && !performSubFilterSearch && s == null)
             {
                 Buttons.Add(_items);
                 return;
@@ -164,18 +217,30 @@ namespace DOT.ViewModels
 
 
                 }
-                if (performColorSearch && isValid)
+                if (performSubFilterSearch && isValid)
                 {
-                    isValid = false;
+                    bool found = false;
                     foreach (var v in i.GetSubitems())
                     {
-                        if (Helper.SharesAnyValueWith(v.Colors, col))
-                        {
-                            isValid = true;
-                            break;
-                        }
-                    }
 
+                        if (col.Count > 0 && !Helper.SharesAnyValueWith(v.Colors, col))
+                        {
+                            continue;
+                        }
+                        var h = new List<string>();
+                        foreach (var indexer in v.Sizes)
+                            h.Add(transform(indexer));
+
+
+                        if (sizes.Count > 0 && !Helper.SharesAnyValueWith(h, sizes))
+                        {
+                            continue;
+                        }
+                        found = true;
+                        break;
+                    }
+                    if (!found)
+                        isValid = false;
                 }
                 if (isValid)
                     IfSimilarADD(i, s);

@@ -3,7 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DOT.Views.SecondView">
+             x:Class="DOT.Views.SecondView"
+             xmlns:rs="using:RangeSlider.Avalonia.Controls">
   <Grid ColumnDefinitions="*,4*" >
     <StackPanel Grid.Column="1" Margin="10 0 10 0">
       <Border 
@@ -38,28 +39,27 @@
       </Button>
       <TreeView BorderThickness="1">
         <TreeViewItem Header="Price">
-          <StackPanel Orientation="Horizontal">
-            <TextBox Watermark="From"></TextBox>
-            <TextBox Watermark="To"></TextBox>
-          </StackPanel>
+          <rs:RangeSlider Minimum="0" Maximum="100" LowerSelectedValue="25" UpperSelectedValue="75" IsThumbOverlap="True"/>
         </TreeViewItem>
       </TreeView>
-      <TreeView>
-        <TreeViewItem Header="{Binding Colors.Name}" IsExpanded="{Binding Colors.IsExpanded}">
-          <ItemsControl ItemsSource="{Binding Colors.Values}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
+      <ItemsControl ItemsSource="{Binding SubFilterItems}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <TreeView BorderThickness="1">
+              <TreeViewItem Header="{Binding Name}" IsExpanded="{Binding IsExpanded}">
+                <ItemsControl ItemsSource="{Binding Values}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
                       <CheckBox Content="{Binding Name}"
                                 IsChecked="{Binding IsChecked}"/>
                     </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </TreeViewItem>
-
-        
-          
-        
-      </TreeView>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </TreeViewItem>
+            </TreeView>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
       <ItemsControl ItemsSource="{Binding FilterItems}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
