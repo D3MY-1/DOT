@@ -12,6 +12,7 @@
       <Button Name="BetterButton"
               Command="{Binding Command}"
               CornerRadius="15"
+              Background="White"
               >
         <Image Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
       </Button >

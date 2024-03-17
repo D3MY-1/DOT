@@ -39,6 +39,18 @@ namespace DOT.ViewModels
 
         private ObservableCollection<FilterUpperItem> _subFilterItems;
 
+        private float maxPrice = float.MinValue;
+
+        private float minPrice = float.MaxValue;
+
+        private float _lowerSelectedValue = 0;
+
+        private float _upperSelectedValue = 100;
+
+        private int _lowPrice;
+
+        private int _highPrice;
+
         public ReactiveCommand<Unit, Unit> Command { get; }
 
 
@@ -66,6 +78,30 @@ namespace DOT.ViewModels
             set => this.RaiseAndSetIfChanged(ref _subFilterItems, value);
         }
 
+        public float LowerSelectedValue
+        {
+            get => _lowerSelectedValue;
+            set => this.RaiseAndSetIfChanged(ref _lowerSelectedValue, value);
+        }
+
+        public float UpperSelectedValue
+        {
+            get => _upperSelectedValue;
+            set => this.RaiseAndSetIfChanged(ref _upperSelectedValue, value);
+        }
+
+        public int LowPrice
+        {
+            get => _lowPrice;
+            set => this.RaiseAndSetIfChanged(ref _lowPrice, value);
+        }
+
+        public int HighPrice
+        {
+            get => _highPrice;
+            set => this.RaiseAndSetIfChanged(ref _highPrice, value);
+        }
+
         private static string transform(string text)
         {
             float n;
@@ -77,6 +113,7 @@ namespace DOT.ViewModels
 
         public SecondViewModel(MainViewModel mvm, Models.Type type) // Very bad system right now. Spaghetti mess.
         {
+
             _ = Logger.Instance.Log($"Initialized new SecondViewModel with this type : {type.Name}");
             var v = type.Items;
 
@@ -91,13 +128,12 @@ namespace DOT.ViewModels
 
 
 
-            _items = new List<ItemViewModel>();
+            _items = new List<ItemViewModel>();         // Very bad code //
             var colItems = new List<FilterItem>();
             var sizeItems = new List<FilterItem>();
             var priceItems = new List<FilterItem>();
             var colors = new HashSet<string>();
             var sizes = new List<string>();
-            var prices = new HashSet<string>();
 
             foreach (var a in v)
             {
@@ -113,7 +149,10 @@ namespace DOT.ViewModels
                             sizes.Add(transform(size));
                     }
 
-                    prices.Add(Math.Round(sub.Price, 2).ToString());
+                    if (sub.Price < minPrice)
+                        minPrice = sub.Price;
+                    else if (sub.Price > maxPrice)
+                        maxPrice = sub.Price;
                 }
 
                 _items.Add(new ItemViewModel(a, mvm)); //Main Filters
@@ -131,8 +170,6 @@ namespace DOT.ViewModels
             }
             foreach (var a in sizes)
                 sizeItems.Add(new FilterItem(a, this));
-            foreach (var a in prices)
-                priceItems.Add(new FilterItem(a, this));
 
 
 
@@ -159,6 +196,16 @@ namespace DOT.ViewModels
 
 
             Buttons = new ObservableCollection<ItemViewModel>(_items);
+
+            this.WhenAnyValue(x => x.LowerSelectedValue)
+                .Throttle(TimeSpan.FromMilliseconds(400))
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(RecalculatePrice!);
+
+            this.WhenAnyValue(x => x.UpperSelectedValue)
+                .Throttle(TimeSpan.FromMilliseconds(400))
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .Subscribe(RecalculatePrice!);
 
             this.WhenAnyValue(x => x.SearchText)
                 .ObserveOn(RxApp.MainThreadScheduler)
@@ -248,6 +295,16 @@ namespace DOT.ViewModels
 
         }
 
+
+        private void RecalculatePrice(float val)
+        {
+            var v = (int)Math.Round((maxPrice - minPrice) * (val / 100) + minPrice);
+
+            if (val.Equals(LowerSelectedValue))
+                LowPrice = v;
+            if (val.Equals(UpperSelectedValue))
+                HighPrice = v;
+        }
 
         private void IfSimilarADD(ItemViewModel item, string s)
         {

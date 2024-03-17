@@ -39,7 +39,14 @@
       </Button>
       <TreeView BorderThickness="1">
         <TreeViewItem Header="Price">
-          <rs:RangeSlider Minimum="0" Maximum="100" LowerSelectedValue="25" UpperSelectedValue="75" IsThumbOverlap="True"/>
+          <StackPanel>
+            <Grid ColumnDefinitions="*,*,*">
+              <Label Grid.Column="0" Content="{Binding LowPrice}"/>
+              <Label Grid.Column="2" Content="{Binding HighPrice}"/>
+            </Grid>
+            <rs:RangeSlider Minimum="0" Maximum="100" LowerSelectedValue="{Binding LowerSelectedValue}" UpperSelectedValue="{Binding UpperSelectedValue}" IsThumbOverlap="True"/>
+          </StackPanel>
+          
         </TreeViewItem>
       </TreeView>
       <ItemsControl ItemsSource="{Binding SubFilterItems}">
