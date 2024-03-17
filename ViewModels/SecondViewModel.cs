@@ -198,12 +198,10 @@ namespace DOT.ViewModels
             Buttons = new ObservableCollection<ItemViewModel>(_items);
 
             this.WhenAnyValue(x => x.LowerSelectedValue)
-                .Throttle(TimeSpan.FromMilliseconds(400))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(RecalculatePrice!);
 
             this.WhenAnyValue(x => x.UpperSelectedValue)
-                .Throttle(TimeSpan.FromMilliseconds(400))
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(RecalculatePrice!);
 
