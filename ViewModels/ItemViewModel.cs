@@ -1,13 +1,9 @@
-﻿using ReactiveUI;
+﻿using Avalonia.Media.Imaging;
+using DOT.Models;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Reactive;
-using System.Text;
-using System.Threading.Tasks;
-using DOT.Models;
-using Avalonia.Media.Imaging;
 
 namespace DOT.ViewModels
 {
@@ -15,25 +11,39 @@ namespace DOT.ViewModels
     {
         private Item _content;
 
-        public string Name => _content.name;
+        public string Name => _content.Name;
 
         private Bitmap _cover;
 
         public Bitmap Cover => _cover;
 
-        private int numberClicked = 0;
+        //public static MainViewModel
 
         public ReactiveCommand<Unit, Unit> Command { get; }
-        public ItemViewModel(Item item)
+
+        public List<string> GetFilterValues()
         {
-            _content = item;
-            _cover = Bitmap.DecodeToWidth(_content.LoadMainImage(),400);
-            Command = ReactiveCommand.Create(() =>
+            return _content.FilterValues;
+        }
+
+        public List<SubItem> GetSubitems()
+        {
+            return _content.SubItems;
+        }
+
+        public ItemViewModel(Item item, MainViewModel mvm)
+        {
+            try
             {
-                numberClicked += 1;
-                //Content = numberClicked.ToString();
-            });
-            
+                _content = item;
+                _cover = Bitmap.DecodeToWidth(_content.LoadSomeImage(_content.SubItems[0].Colors[0]), 400);
+            }
+            catch (Exception ex)
+            {
+                _ = Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
+            }
+
+            Command = ReactiveCommand.Create(() => { mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Third, item); });
         }
     }
 }

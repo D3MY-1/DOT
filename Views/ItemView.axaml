@@ -6,18 +6,19 @@
              x:Class="DOT.Views.ItemView"
              xmlns:vm="using:DOT.ViewModels"
              x:DataType="vm:ItemViewModel"
-             Width="279"
-             Height="200"
              >
-  <StackPanel Spacing="5" Width="260">
-      <Button Background ="Transparent"
-             Height="150" Width="260"
+  <Viewbox Stretch="Uniform" >
+    <StackPanel Spacing="5">
+      <Button Name="BetterButton"
               Command="{Binding Command}"
               CornerRadius="15"
+              Background="White"
               >
-        <Image Width="260" Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
+        <Image Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
       </Button >
-    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="20"/>
-  </StackPanel>
-  
+      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>
+    </StackPanel>
+  </Viewbox>
+
+
 </UserControl>

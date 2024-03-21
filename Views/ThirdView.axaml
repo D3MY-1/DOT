@@ -1,0 +1,104 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DOT.Views.ThirdView">
+
+  <Grid ColumnDefinitions="*,5*,2*" RowDefinitions="*" Margin="20">
+    <StackPanel Margin="0 0 20 0"  Grid.Column="0" >
+    <Button 
+      Command="{Binding Command}"
+      HorizontalAlignment="Left">
+      Back
+    </Button>
+      <Grid ColumnDefinitions="*,*" Grid.Column="0">
+        <ListBox ItemsSource="{Binding Images}"
+             HorizontalAlignment="Left"
+             Margin="0 30 0 0"
+             SelectedIndex="{Binding SelectedImageIndex}"
+             VerticalAlignment="Center">
+
+          <ListBox.ItemTemplate>
+            <DataTemplate>
+              <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+                <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+              </Border>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+          <ListBox.Styles>
+            <Style Selector="ListBoxItem">
+              <Setter Property="Margin" Value="0"/>
+              <Setter Property="Padding" Value="0"/>
+              <Setter Property="Grid.Column" Value="0"/>
+              <Setter Property="ClipToBounds" Value="True"/>
+            </Style>
+          </ListBox.Styles>
+        </ListBox>
+
+      </Grid>
+      
+    
+  </StackPanel>
+  <Image Grid.Column="1" Margin="0 0 20 0" Source="{Binding MainImage}"/>
+
+    <StackPanel Grid.Column="2">
+      <ListBox ItemsSource="{Binding Shops}"
+              HorizontalAlignment="Left"
+              Margin="0 30 0 0"
+              SelectedIndex="{Binding SelectedShopIndex}"
+              VerticalAlignment="Center">
+
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+              <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+          </Style>
+        </ListBox.Styles>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="5"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+
+      <ListBox ItemsSource="{Binding Colors}"
+               HorizontalAlignment="Left"
+               Margin="0 30 0 0"
+               SelectedIndex="{Binding SelectedColorIndex}"
+               VerticalAlignment="Center">
+
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+              <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
+            </Border>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+        <ListBox.Styles>
+          <Style Selector="ListBoxItem">
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="ClipToBounds" Value="True"/>
+          </Style>
+        </ListBox.Styles>
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="5"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+    </StackPanel>
+
+
+  </Grid>
+  
+</UserControl>

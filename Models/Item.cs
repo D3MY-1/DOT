@@ -1,50 +1,45 @@
-﻿using ReactiveUI;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DOT.Models
 {
+
+    public class Type
+    {
+        // PS SOMEHOW implement check for null values
+        public string Name { get; set; }
+        public string ImageName { get; set; }
+        public List<string> Filters { get; set; }
+        public List<Item>? Items { get; set; }
+        public Stream? LoadImage()
+        {
+            return DatabaseLoader.LoadImageFromAssets(ImageName, "");
+        }
+
+    }
+
+    public class SubItem
+    {
+        public string ShopName { get; set; }
+        public List<string> Colors { get; set; }
+        public List<string> Sizes { get; set; }
+        public float Price { get; set; }
+    }
+
+
     public class Item
     {
-        public Item(string type, string name,List<string> ImageNames)
+        // PS SOMEHOW implement check for null values
+        public string Name { get; set; }
+        public List<string> FilterValues { get; set; }
+        public List<SubItem> SubItems { get; set; }
+        public Stream? LoadSomeImage(string color)
         {
-            this.type = type;
-            this.name = name;
-            this.ImageNames = ImageNames;
+            return DatabaseLoader.LoadImageFromAssets(Name, color);
         }
-
-        List<string> ImageNames;
-
-        private string AssetsPath = "./Assets/";
-
-        public Stream LoadMainImage()
+        public List<Stream>? LoadAllImages(string color)
         {
-            return File.OpenRead(AssetsPath + ImageNames[0] +  ".png");
+            return DatabaseLoader.LoadSequentialImages(Name, color);
         }
-
-        public List<Stream> LoadSecondaryImages()
-        {
-            List<Stream> ret = new();
-            if (ImageNames.Count > 1) 
-            {
-                for (int i = 1;i < ImageNames.Count;i++)
-                {
-                    ret.Add(File.OpenRead(AssetsPath + ImageNames[i] + ".png"));
-                }
-            }
-            return ret;
-        }
-
-
-        public string type { get; }
-
-        public string name {  get; }
-
-        public string mainImageName { get; }
-
     }
 }

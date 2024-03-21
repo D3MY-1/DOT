@@ -3,7 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DOT.Views.FirstView">
+             x:Class="DOT.Views.FirstView"
+             Background="LightGray">
   <DockPanel>
     <Border DockPanel.Dock="Top"
             BorderBrush="Black"
@@ -11,6 +12,7 @@
             VerticalAlignment="Top"
             CornerRadius="10"
             Margin="90,60"
+            Background="White"
             >
       <DockPanel Margin="5">
         <PathIcon Data="{StaticResource search_regular}" Margin="6,0"/>
@@ -19,30 +21,22 @@
                  Text="{Binding SearchText}"/>
       </DockPanel>
     </Border>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" >
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >
       <ScrollViewer.GestureRecognizers>
-        <ScrollGestureRecognizer CanHorizontallyScroll="True" CanVerticallyScroll="True"/>
+        <ScrollGestureRecognizer CanHorizontallyScroll="False" CanVerticallyScroll="True"/>
       </ScrollViewer.GestureRecognizers>
-      <WrapPanel DockPanel.Dock="Bottom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0 16 0 0"   Orientation="Vertical">
-        <WrapPanel.Styles>
-          <Style Selector="Button">
-            <Setter Property="Width" Value="300"/>
-            <Setter Property="Margin" Value="10"/>
-            <Setter Property="Height" Value="200"/>
-          </Style>
-        </WrapPanel.Styles>
 
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-        <Button/>
-
-      </WrapPanel>
+      <ItemsControl ItemsSource="{Binding DisplayButtons}" Margin="10" Background="Transparent" VerticalAlignment="Top">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <UniformGrid Columns="3"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      <ItemsControl.DataTemplates>
+        
+      </ItemsControl.DataTemplates>
+      </ItemsControl>
+      
     </ScrollViewer>
   </DockPanel>
 </UserControl>
