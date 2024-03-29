@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using Microsoft.Data.Sqlite;
 using System.Collections.Generic;
 using System.IO;
 
@@ -9,7 +8,7 @@ namespace DOT.Models
 {
     public class DatabaseLoader
     {
-        private const string DBPATH = "db.json";
+        private const string DBPATH = "lol.db";
         private const string AssetsPath = "./Assets/";
 
 
@@ -17,25 +16,32 @@ namespace DOT.Models
         public DatabaseLoader()
         {
             _ = Logger.Instance.Log("DatabaseLoader Initializing");
-            try
+            var a = $"Data Source={AssetsPath}{DBPATH};Mode=ReadOnly";
+            var connectionString = new SqliteConnectionStringBuilder()
             {
-                if (!File.Exists(AssetsPath + DBPATH))
-                {
-                    throw new FileNotFoundException("The database file could not be found.");
-                }
+                Mode = SqliteOpenMode.ReadOnly,
+                DataSource = DBPATH
 
-                string json = File.ReadAllText(AssetsPath + DBPATH);
+            }.ToString();
 
-                if (string.IsNullOrEmpty(json))
-                {
-                    throw new InvalidDataException("The database file is empty or could not be read.");
-                }
-
-                Types = JsonConvert.DeserializeObject<List<Type>>(json);
-            }
-            catch (Exception ex)
+            using (var connection = new SqliteConnection(connectionString))
             {
-                _ = Logger.Instance.Log($"Error Message : {ex.Message}");
+                var command = connection.CreateCommand();
+                command.CommandText =
+                    @"
+                        SELECT Name
+                        FROM Items
+                    ";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var name = reader.GetString(0);
+
+
+                    }
+                }
             }
 
         }
