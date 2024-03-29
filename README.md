@@ -1,1 +1,28 @@
-# To compile this yourself you will also need [this](https://github.com/D3MY-1/DOT.Desktop) repository download them both put in one folder then if you're on Visual Studio open sln file in DOT folder and compile.
+# DOT
+
+DOT is programming school project.
+
+## Build
+
+
+Download [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+
+Download 2 source codes DOT and [DOT.Desktop](https://github.com/D3MY-1/DOT.Desktop)
+
+Put them in one folder
+
+Rename DOT-master to DOT
+
+open cmd in DOT.Desktop folder
+
+then run
+```bash
+dotnet build DOT.Desktop.csproj
+```
+
+
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
