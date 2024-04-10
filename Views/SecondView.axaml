@@ -41,8 +41,9 @@
         <TreeViewItem Header="Price">
           <StackPanel>
             <Grid ColumnDefinitions="*,*,*">
-              <Label Grid.Column="0" Content="{Binding LowPrice}"/>
-              <Label Grid.Column="2" Content="{Binding HighPrice}"/>
+              <Label Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding LowPrice}"/>
+              <Label Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Content="To"/>
+              <Label Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding HighPrice}"/>
             </Grid>
             <rs:RangeSlider Minimum="0" Maximum="100" LowerSelectedValue="{Binding LowerSelectedValue}" UpperSelectedValue="{Binding UpperSelectedValue}" IsThumbOverlap="True"/>
           </StackPanel>

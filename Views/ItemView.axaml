@@ -17,6 +17,7 @@
         <Image Stretch="Fill" ClipToBounds="True" Source="{Binding MainCover}"/>
       </Button >
       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>
+      <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding PriceRange}" FontSize="20"/>
     </StackPanel>
   </Viewbox>
 

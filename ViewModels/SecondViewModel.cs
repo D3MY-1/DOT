@@ -47,9 +47,9 @@ namespace DOT.ViewModels
 
         private float _upperSelectedValue = 100;
 
-        private int _lowPrice;
+        private string _lowPrice;
 
-        private int _highPrice;
+        private string _highPrice;
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
@@ -90,17 +90,29 @@ namespace DOT.ViewModels
             set => this.RaiseAndSetIfChanged(ref _upperSelectedValue, value);
         }
 
-        public int LowPrice
+        public string LowPrice
         {
             get => _lowPrice;
-            set => this.RaiseAndSetIfChanged(ref _lowPrice, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _lowPrice, "€" + value);
+                _ilowPrice = int.Parse(value);
+            }
         }
 
-        public int HighPrice
+        public string HighPrice
         {
             get => _highPrice;
-            set => this.RaiseAndSetIfChanged(ref _highPrice, value);
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _highPrice, "€" + value);
+                _ihighPrice = int.Parse(value);
+            }
         }
+
+        int _ihighPrice = 0;
+
+        int _ilowPrice = 0;
 
         private static string transform(string text)
         {
@@ -311,16 +323,16 @@ namespace DOT.ViewModels
             var v = (int)Math.Round((maxPrice - minPrice) * (val / 100) + minPrice);
 
             if (val.Equals(LowerSelectedValue))
-                LowPrice = v;
+                LowPrice = v.ToString();
             if (val.Equals(UpperSelectedValue))
-                HighPrice = v;
+                HighPrice = v.ToString();
             PerformSearch();
 
         }
 
         private bool IfSimilarADD(ItemViewModel item, string s)
         {
-            if (!item.PriceInRange(LowPrice, HighPrice))
+            if (!item.PriceInRange(_ilowPrice, _ihighPrice))
                 return false;
             //if (s == null)
             //{
