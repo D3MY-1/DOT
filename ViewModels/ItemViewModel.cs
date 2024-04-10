@@ -3,6 +3,7 @@ using DOT.Models;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 
 namespace DOT.ViewModels
@@ -11,11 +12,19 @@ namespace DOT.ViewModels
     {
         private Item _content;
 
+
+
         public string Name => _content.Name;
 
-        private Bitmap _cover;
+        private Bitmap _mainCover;
 
-        public Bitmap Cover => _cover;
+        private Dictionary<string, Bitmap> covers;
+
+        public Bitmap MainCover
+        {
+            get => _mainCover;
+            set => this.RaiseAndSetIfChanged(ref _mainCover, value);
+        }
 
         //public static MainViewModel
 
@@ -31,12 +40,54 @@ namespace DOT.ViewModels
             return _content.SubItems;
         }
 
+        public bool PriceInRange(float min, float max)
+        {
+            foreach (var item in _content.SubItems)
+            {
+                if (item.Price > min && item.Price < max)
+                    return true;
+            }
+            return false;
+        }
+
+        public void ChangeColor(string color)
+        {
+            try
+            {
+                MainCover = covers[color];
+            }
+            catch
+            {
+                _ = Logger.Instance.Log("Error switching cover color!");
+            }
+        }
+
         public ItemViewModel(Item item, MainViewModel mvm)
         {
             try
             {
+                covers = new Dictionary<string, Bitmap>();
                 _content = item;
-                _cover = Bitmap.DecodeToWidth(_content.LoadSomeImage(_content.SubItems[0].Colors[0]), 400);
+                var colors = new List<string>();
+                foreach (var subItem in _content.SubItems)
+                    foreach (var color in subItem.Colors)
+                        if (!colors.Contains(color))
+                        {
+                            colors.Add(color);
+                            try
+                            {
+                                covers.Add(color, Bitmap.DecodeToWidth(_content.LoadSomeImage(color), 400));
+                            }
+                            catch
+                            {
+                                _ = Logger.Instance.Log($"Error loading covers for {color} color!");
+                            }
+                        }
+
+                if (covers.Count > 0)
+                {
+                    _mainCover = covers.ToList()[0].Value;
+                }
             }
             catch (Exception ex)
             {

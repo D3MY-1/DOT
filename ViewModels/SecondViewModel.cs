@@ -1,9 +1,9 @@
 ﻿using DOT.Models;
-using DynamicData;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 
@@ -127,7 +127,6 @@ namespace DOT.ViewModels
             }
 
 
-
             _items = new List<ItemViewModel>();         // Very bad code //
             var colItems = new List<FilterItem>();
             var sizeItems = new List<FilterItem>();
@@ -205,8 +204,11 @@ namespace DOT.ViewModels
                 .ObserveOn(RxApp.MainThreadScheduler)
                 .Subscribe(RecalculatePrice!);
 
+
+
             this.WhenAnyValue(x => x.SearchText)
-                .ObserveOn(RxApp.MainThreadScheduler)
+                .ObserveOn(RxApp.TaskpoolScheduler)
+                .Throttle(TimeSpan.FromMilliseconds(50))
                 .Subscribe(StartSearch!);
             Command = ReactiveCommand.Create(() => mvm.ChangeViewModel(MainViewModel.ViewModelEnum.First, null));
         }
@@ -215,14 +217,20 @@ namespace DOT.ViewModels
         {
             PerformSearch();
         }
+        private void StartSearch(int s)
+        {
+            PerformSearch();
+        }
+        private readonly object searchLock = new object();
 
         public void PerformSearch() // Need more advanced algorithm.
         {
+
             if (Buttons == null)
                 return;
+            List<ItemViewModel> newItems = new List<ItemViewModel>();
             var s = SearchText;
-
-            Buttons.Clear();
+            //Buttons.Clear();
             var col = SubFilterItems[0].GetToggled();
             var sizes = SubFilterItems[1].GetToggled();
 
@@ -233,12 +241,6 @@ namespace DOT.ViewModels
                 if (item.GetToggled().Count > 0) { performFilterSearch = true; break; }
             }
 
-            if (!performFilterSearch && !performSubFilterSearch && s == null)
-            {
-                Buttons.Add(_items);
-                return;
-            }
-
 
 
 
@@ -247,50 +249,60 @@ namespace DOT.ViewModels
                 bool isValid = true;
                 if (performFilterSearch)
                 {
-                    var values = i.GetFilterValues();
-
-                    for (var j = 0; j < values.Count; j++)
-                    {
-                        var v = FilterItems[j].GetToggled();
-                        if ((v.Count == 0) || (v.Count > 0 && v.Contains(values[j])))
-                            continue;
-
-                        isValid = false;
-                        break;
-                    }
-
-
-
+                    isValid = PerformFilterCheck(i);
                 }
                 if (performSubFilterSearch && isValid)
                 {
-                    bool found = false;
-                    foreach (var v in i.GetSubitems())
-                    {
-
-                        if (col.Count > 0 && !Helper.SharesAnyValueWith(v.Colors, col))
-                        {
-                            continue;
-                        }
-                        var h = new List<string>();
-                        foreach (var indexer in v.Sizes)
-                            h.Add(transform(indexer));
-
-
-                        if (sizes.Count > 0 && !Helper.SharesAnyValueWith(h, sizes))
-                        {
-                            continue;
-                        }
-                        found = true;
-                        break;
-                    }
-                    if (!found)
-                        isValid = false;
+                    isValid = PerformSubFilterCheck(i);
                 }
-                if (isValid)
-                    IfSimilarADD(i, s);
+                if (isValid && IfSimilarADD(i, s))
+                    newItems.Add(i);
+                //IfSimilarADD(i, s);
             }
+            Buttons = new ObservableCollection<ItemViewModel>(newItems);
+        }
 
+
+        private bool PerformFilterCheck(ItemViewModel it)
+        {
+            var values = it.GetFilterValues();
+
+            for (var j = 0; j < values.Count; j++)
+            {
+                var v = FilterItems[j].GetToggled();
+                if ((v.Count == 0) || (v.Count > 0 && v.Contains(values[j])))
+                    continue;
+
+                return false;
+            }
+            return true;
+        }
+
+        private bool PerformSubFilterCheck(ItemViewModel it)
+        {
+            var col = SubFilterItems[0].GetToggled();
+            var sizes = SubFilterItems[1].GetToggled();
+            foreach (var v in it.GetSubitems())
+            {
+                var inter = v.Colors.Intersect(col);
+                if (col.Count > 0 && inter.Count() <= 0)
+                {
+                    continue;
+                }
+                var h = new List<string>();
+                foreach (var indexer in v.Sizes)
+                    h.Add(transform(indexer));
+
+
+                if (sizes.Count > 0 && !Helper.SharesAnyValueWith(h, sizes))
+                {
+                    continue;
+                }
+                if (inter.Count() > 0)
+                    it.ChangeColor(inter.First());
+                return true;
+            }
+            return false;
         }
 
 
@@ -302,18 +314,24 @@ namespace DOT.ViewModels
                 LowPrice = v;
             if (val.Equals(UpperSelectedValue))
                 HighPrice = v;
+            PerformSearch();
+
         }
 
-        private void IfSimilarADD(ItemViewModel item, string s)
+        private bool IfSimilarADD(ItemViewModel item, string s)
         {
-            if (s == null)
-            {
-                Buttons.Add(item);
-                return;
-            }
-
-            if (item.Name.ToUpper().Contains(s.ToUpper()))
-                Buttons.Add(item);
+            if (!item.PriceInRange(LowPrice, HighPrice))
+                return false;
+            //if (s == null)
+            //{
+            //Buttons.Add(item);
+            //    Logger.Instance.Log("Add Item!!!!!!!!");
+            //   return true;
+            //}
+            //else if (item.Name.ToUpper().Contains(s.ToUpper()))
+            //Buttons.Add(item);
+            //   return true;
+            return s == null || item.Name.ToUpper().Contains(s.ToUpper());
         }
 
 

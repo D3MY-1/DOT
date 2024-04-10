@@ -14,7 +14,7 @@
               CornerRadius="15"
               Background="White"
               >
-        <Image Stretch="Fill" ClipToBounds="True" Source="{Binding Cover}"/>
+        <Image Stretch="Fill" ClipToBounds="True" Source="{Binding MainCover}"/>
       </Button >
       <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>
     </StackPanel>
