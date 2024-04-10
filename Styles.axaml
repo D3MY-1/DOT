@@ -56,6 +56,14 @@
     </Style>
       
   </Style>
+  <Style Selector="ListBoxItem">
+    <Style Selector="^:selected">
+      <Setter Property="RenderTransform" Value="scale(0.95)"/>
+    </Style>
+    <Style Selector="^:selected /template/ Border#Special">
+      <Setter Property="CornerRadius" Value="2"/>
+    </Style>
+  </Style>
   <!-- Better ListItem style-->
   <Style Selector="TreeViewItem">
 

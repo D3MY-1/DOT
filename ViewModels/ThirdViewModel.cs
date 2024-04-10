@@ -211,6 +211,7 @@ namespace DOT.ViewModels
             }
             Colors = a;
             SelectedColorIndex = 0;
+            SelectedImageIndex = 0;
             if (Colors.Count > 0)
                 ReportChangesColors(SelectedColorIndex);
 
@@ -230,7 +231,6 @@ namespace DOT.ViewModels
                     Images[SelectedImageIndex].Rest();
                 Images = new ObservableCollection<ButtonImage>(_col[Colors[ch].Name]);
             }
-
 
             SelectedImageIndex = 0;
             ReportChangeImages(SelectedImageIndex);

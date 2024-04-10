@@ -21,7 +21,7 @@
 
           <ListBox.ItemTemplate>
             <DataTemplate>
-              <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+              <Border CornerRadius="2" BorderBrush="{Binding BorderColor}" BorderThickness="1">
                 <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
               </Border>
             </DataTemplate>
@@ -51,7 +51,7 @@
 
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+            <Border CornerRadius="2" BorderBrush="{Binding BorderColor}" BorderThickness="1">
               <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
             </Border>
           </DataTemplate>
@@ -61,6 +61,7 @@
             <Setter Property="Margin" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="ClipToBounds" Value="True"/>
+            
           </Style>
         </ListBox.Styles>
         <ListBox.ItemsPanel>
@@ -78,7 +79,7 @@
 
         <ListBox.ItemTemplate>
           <DataTemplate>
-            <Border BorderBrush="{Binding BorderColor}" BorderThickness="1">
+            <Border BorderBrush="{Binding BorderColor}" CornerRadius="2" BorderThickness="1">
               <Image Stretch="UniformToFill" Source="{Binding Image}" ClipToBounds="True"/>
             </Border>
           </DataTemplate>
