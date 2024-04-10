@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using System;
+using System.Collections.Generic;
 
 namespace DOT.ViewModels;
 
@@ -37,7 +38,7 @@ public class MainViewModel : ViewModelBase
         Third,
     }
 
-    public void ChangeViewModel(ViewModelEnum en, object? obj)
+    public void ChangeViewModel(ViewModelEnum en, object? obj, object? obj2 = null)
     {
         _ = Logger.Instance.Log($"ContentViewModel is changed to {en.ToString()} ViewModel");
         try
@@ -55,7 +56,8 @@ public class MainViewModel : ViewModelBase
                     break;
                 case ViewModelEnum.Third:
                     ArgumentNullException.ThrowIfNull(obj, "obj cannot be null in here!");
-                    ContentViewModel = new ThirdViewModel(this, (Models.Item)obj);
+                    ArgumentNullException.ThrowIfNull(obj2, "obj2 cannot be null in here!");
+                    ContentViewModel = new ThirdViewModel(this, (Models.Item)obj, (List<string>)obj2);
                     break;
             }
         }

@@ -166,7 +166,7 @@ namespace DOT.ViewModels
                         maxPrice = sub.Price;
                 }
 
-                _items.Add(new ItemViewModel(a, mvm)); //Main Filters
+                _items.Add(new ItemViewModel(a, type.Filters, mvm)); //Main Filters
                 for (var i = 0; i < type.Filters.Count; i++)
                 {
                     filterValue[i].Add(a.FilterValues[i]); // Too complicated

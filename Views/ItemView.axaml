@@ -8,17 +8,20 @@
              x:DataType="vm:ItemViewModel"
              >
   <Viewbox Stretch="Uniform" >
-    <StackPanel Spacing="5">
-      <Button Name="BetterButton"
-              Command="{Binding Command}"
-              CornerRadius="15"
-              Background="White"
+    <Border>
+      <StackPanel Spacing="5">
+        <Button Name="BetterButton"
+                Command="{Binding Command}"
+                CornerRadius="15"
+                Background="White"
               >
-        <Image Stretch="Fill" ClipToBounds="True" Source="{Binding MainCover}"/>
-      </Button >
-      <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>
-      <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding PriceRange}" FontSize="20"/>
-    </StackPanel>
+          <Image Stretch="Fill" ClipToBounds="True" Source="{Binding MainCover}"/>
+        </Button >
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding Name}" FontSize="30"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding PriceRange}" FontSize="20"/>
+      </StackPanel>
+    </Border>
+
   </Viewbox>
 
 

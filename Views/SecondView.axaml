@@ -34,8 +34,11 @@
     </StackPanel>
 
     <StackPanel Grid.Column="0">
+      <ScrollViewer>
+        
+      </ScrollViewer>
       <Button Margin="20" Command="{Binding Command}">
-        Back
+        <PathIcon Data="{StaticResource arrow_left_regular}"/>
       </Button>
       <TreeView BorderThickness="1">
         <TreeViewItem Header="Price">
@@ -86,8 +89,7 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
-        
-      
+
       
     </StackPanel>
     

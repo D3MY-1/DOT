@@ -10,14 +10,14 @@
     <Button 
       Command="{Binding Command}"
       HorizontalAlignment="Left">
-      Back
+      <PathIcon Data="{StaticResource arrow_left_regular}"/>
     </Button>
       <Grid ColumnDefinitions="*,*" Grid.Column="0">
         <ListBox ItemsSource="{Binding Images}"
              HorizontalAlignment="Left"
              Margin="0 30 0 0"
              SelectedIndex="{Binding SelectedImageIndex}"
-             VerticalAlignment="Center">
+             VerticalAlignment="Center" Background="Transparent">
 
           <ListBox.ItemTemplate>
             <DataTemplate>
@@ -47,7 +47,8 @@
               HorizontalAlignment="Left"
               Margin="0 30 0 0"
               SelectedIndex="{Binding SelectedShopIndex}"
-              VerticalAlignment="Center">
+              VerticalAlignment="Center"
+               Background="Transparent">
 
         <ListBox.ItemTemplate>
           <DataTemplate>
@@ -75,7 +76,8 @@
                HorizontalAlignment="Left"
                Margin="0 30 0 0"
                SelectedIndex="{Binding SelectedColorIndex}"
-               VerticalAlignment="Center">
+               VerticalAlignment="Center"
+               Background="Transparent">
 
         <ListBox.ItemTemplate>
           <DataTemplate>
@@ -97,6 +99,19 @@
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
       </ListBox>
+      <Label Margin="0 40 0 0" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="35" Content="INFO"/>
+      <ItemsControl ItemsSource="{Binding InfoText}" >
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Label Content="{Binding}" FontSize="25"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
     </StackPanel>
 
 

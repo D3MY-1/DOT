@@ -48,6 +48,7 @@ namespace DOT.ViewModels
             Image = img;
             Name = name;
         }
+
     }
 
 
@@ -115,16 +116,40 @@ namespace DOT.ViewModels
             set => this.RaiseAndSetIfChanged(ref _shops, value);
         }
 
+        private ObservableCollection<string> _infoText;
+
+        public ObservableCollection<string> InfoText
+        {
+            get => _infoText;
+            set => this.RaiseAndSetIfChanged(ref _infoText, value);
+        }
 
         public ReactiveCommand<Unit, Unit> Command { get; }
 
         private Dictionary<string, List<ButtonImage>> _col;
 
 
-        public ThirdViewModel(MainViewModel mvm, Item item)
+        private List<string> infConst;
+
+
+
+        enum ChListNames
+        {
+            Shop,
+            Color,
+            Price
+        }
+
+        private List<string> _infChang;
+
+
+        public ThirdViewModel(MainViewModel mvm, Item item, List<string> FilterNames)
         {
 
             _content = item;
+
+
+
 
             this.WhenAnyValue(x => x.SelectedImageIndex)
                 .Subscribe(ReportChangeImages!);
@@ -190,7 +215,30 @@ namespace DOT.ViewModels
             Shops[0].BeActive();
 
 
+            infConst = new List<string>();
+            _infChang = new List<string>();
+
+            if (item.FilterValues.Count == FilterNames.Count)
+
+                for (int i = 0; i < item.FilterValues.Count; i++)
+                {
+                    infConst.Add($"{FilterNames[i]} - {item.FilterValues[i]}");
+                }
+            infConst.Add("");
+            infConst.Add("");
+            infConst.Add("");
+            _infChang.Add($"Shop - {item.SubItems[SelectedShopIndex].ShopName}");
+            _infChang.Add($"Color - {item.SubItems[SelectedShopIndex].Colors[SelectedColorIndex]}");
+            _infChang.Add($"Price - €{item.SubItems[SelectedShopIndex].Price}");
+
+
+            UpdateInfo();
             Command = ReactiveCommand.Create(() => mvm.ChangeFrom3To2());
+        }
+
+        private void UpdateInfo()
+        {
+            InfoText = new ObservableCollection<string>(infConst.Concat(_infChang));
         }
 
         private void ReportChangeShops(int ch)
@@ -209,6 +257,13 @@ namespace DOT.ViewModels
             {
                 Colors[SelectedColorIndex].Rest();
             }
+            if (_infChang != null)
+            {
+                _infChang[(int)ChListNames.Shop] = $"{ChListNames.Shop.ToString()} - {_content.SubItems[ch].ShopName}";
+                _infChang[(int)ChListNames.Price] = $"Price - €{_content.SubItems[ch].Price}";
+                UpdateInfo();
+            }
+
             Colors = a;
             SelectedColorIndex = 0;
             SelectedImageIndex = 0;
@@ -230,6 +285,12 @@ namespace DOT.ViewModels
                 if (Images != null)
                     Images[SelectedImageIndex].Rest();
                 Images = new ObservableCollection<ButtonImage>(_col[Colors[ch].Name]);
+            }
+
+            if (_infChang != null)
+            {
+                _infChang[(int)ChListNames.Color] = $"{ChListNames.Color.ToString()} - {Colors[ch].Name}";
+                UpdateInfo();
             }
 
             SelectedImageIndex = 0;

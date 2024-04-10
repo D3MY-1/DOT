@@ -51,7 +51,7 @@ namespace DOT.ViewModels
         {
             foreach (var item in _content.SubItems)
             {
-                if (item.Price > min && item.Price < max)
+                if (Math.Round(item.Price) >= min && item.Price <= max)
                     return true;
             }
             return false;
@@ -69,7 +69,7 @@ namespace DOT.ViewModels
             }
         }
 
-        public ItemViewModel(Item item, MainViewModel mvm)
+        public ItemViewModel(Item item, List<string> FilterValues, MainViewModel mvm)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace DOT.ViewModels
                 _ = Logger.Instance.Log($"Error initializing ItemViewModel class Error Message : {ex.Message}");
             }
 
-            Command = ReactiveCommand.Create(() => { mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Third, item); });
+            Command = ReactiveCommand.Create(() => { mvm.ChangeViewModel(MainViewModel.ViewModelEnum.Third, item, FilterValues); });
         }
     }
 }
